@@ -2675,7 +2675,7 @@ fieldset[disabled] .btn-link.active {
   -webkit-box-shadow: none;
   box-shadow: none;
   outline: 0 !important;
-  color: #2c2c2c;
+  color: #a2a8bd;
 }
 
 .form-control:focus+.input-group-text,

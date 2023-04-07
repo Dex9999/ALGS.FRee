@@ -2675,7 +2675,7 @@ fieldset[disabled] .btn-link.active {
   -webkit-box-shadow: none;
   box-shadow: none;
   outline: 0 !important;
-  color: #a2a8bd;
+  color: #2c2c2c;
 }
 
 .form-control:focus+.input-group-text,
@@ -3382,7 +3382,8 @@ textarea.form-control:active {
   box-shadow: none;
   height: 30px;
   line-height: 30px;
-  color: #2c2c2c;
+  color: #
+	  ;
   cursor: pointer;
   font-size: 14px;
   text-transform: uppercase;

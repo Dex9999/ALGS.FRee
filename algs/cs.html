@@ -85,23 +85,7 @@
       }
     
     // Sample JSON data
-const titles = [
-  {
-    title: 'Title 1',
-    description: 'Description 1',
-    imageUrl: 'https://example.com/image1.jpg'
-  },
-  {
-    title: 'Title 2',
-    description: 'Description 2',
-    imageUrl: 'https://example.com/image2.jpg'
-  },
-  {
-    title: 'Title 3',
-    description: 'Description 3',
-    imageUrl: 'https://example.com/image3.jpg'
-  }
-];
+const titles = fetch('./oll.json')
 
 // Get the container element where the title cards will be inserted
 const container = document.getElementById('title-cards-container');

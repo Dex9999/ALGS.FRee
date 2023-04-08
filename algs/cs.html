@@ -84,53 +84,59 @@
          
       }
 
-// Get the container element where the title cards will be inserted
-const container = document.getElementById('title-cards-container');
+// Geconst cardData = [{
+  "caseNum": "1",
+  "image": "http://cube.rider.biz/visualcube.php?fmt=svg&size=200&alg=R%20U2%20R2%20F%20R%20F%27%20U2%20R%27%20F%20R%20F'%20&stage=oll&view=plan&size=300",
+  "category": "dot",
+  "algs": [{
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "1",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "2",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "4",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "6",
+    "date": "2023"
+   }, {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "7",
+    "date": "2023"
+   }]
+}];
 
-// Loop through the JSON data and create title cards
-function titled(jsonData) {
-  // Get the container element where the title cards will be inserted
-  let container = document.getElementById("card_container");
+const cardContainer = document.createElement("div");
+cardContainer.classList.add("card");
 
-  // Loop through the JSON data and create title cards
-  jsonData.forEach((item) => {
-    // Create the title card element
-    let card = document.createElement("div");
-    card.classList.add("title-card");
+const image = document.createElement("img");
+image.src = cardData[0].image;
+image.alt = `Rubik's Cube pattern for case number ${cardData[0].caseNum}`;
 
-    // Create the image element
-    let img = document.createElement("img");
-    img.src = item.image;
-    img.alt = "OLL Case " + item.caseNum;
-    card.appendChild(img);
+const caseNum = document.createElement("div");
+caseNum.textContent = `Case number: ${cardData[0].caseNum}`;
 
-    // Create the category element
-    let category = document.createElement("h2");
-    category.innerText = item.category;
-    card.appendChild(category);
+const category = document.createElement("div");
+category.textContent = `Category: ${cardData[0].category}`;
 
-    // Create the list element for the algorithms
-    let algList = document.createElement("ul");
+cardContainer.appendChild(image);
+cardContainer.appendChild(caseNum);
+cardContainer.appendChild(category);
 
-    // Loop through the algorithms and create list items
-    item.algs.forEach((alg) => {
-      let li = document.createElement("li");
-      li.innerText = alg.alg + " (" + alg.votes + " votes)";
-      algList.appendChild(li);
-    });
+document.body.appendChild(cardContainer);
 
-    // Append the list to the title card
-    card.appendChild(algList);
-
-    // Append the title card to the container element
-    container.appendChild(card);
-  });
-}
 
     fetch('./oll.json')
   .then(response => response.json())
   .then(ollAlgs => {
-        titled(ollAlgs)
         ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
         ollAlgs[0].algs.reverse()
         convert(ollAlgs[0].algs) 

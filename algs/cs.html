@@ -33,10 +33,8 @@
         <button class="btn login-btn btn-outline-accent my-2 my-sm-0" style="font-size: 10px !important;font-family: poppins !important;"onClick="copyMe()">Send Feedback to Me on Discord: IceCreamSandwch#9180</button>
     </div>
 </nav>
-<div id="title-cards-container"></div>
-<div id='table_container'/>
-<script> 
-
+<div id="title-cards-container" style="margin: auto;"></div>
+<script>
 const cardData = [{
   "caseNum": "1",
   "image": "../assets/visualcube.png",
@@ -66,40 +64,35 @@ const cardData = [{
     "date": "2023"
    }]
 }];
-
 const cardContainer = document.createElement("div");
 cardContainer.classList.add("card");
 cardContainer.style.width = "300px";
+cardContainer.style.margin = "auto";
 cardContainer.style.backgroundColor = "#1D1E28";
 cardContainer.style.display = "block";
-
 
 const caseNum = document.createElement("div");
 caseNum.classList.add('title');
 caseNum.textContent = `Case Number: ${cardData[0].caseNum}`;
 caseNum.style.color = "#AD91FF";
 caseNum.style.textAlign = "center"; // centering the text
-
 const image = document.createElement("img");
 image.src = cardData[0].image;
 image.alt = `Rubik's Cube pattern for case number ${cardData[0].caseNum}`;
 image.style.display = "block"; // making the image a block element
 image.style.margin = "0 auto"; // centering the image horizontally
-
 const category = document.createElement("div");
 category.classList.add('subtitle');
 category.textContent = `Category: ${cardData[0].category}`;
 category.style.color = "#AD91FF";
 category.style.textAlign = "center"; // centering the text
-
 cardContainer.appendChild(caseNum);
 cardContainer.appendChild(image);
 cardContainer.appendChild(category);
-
 document.body.appendChild(cardContainer);
-
-
-
+</script>
+<div id='table_container'/>
+<script> 
 // Function to convert JSON data to HTML table
       function convert(jsonData) {
          
@@ -129,10 +122,8 @@ document.body.appendChild(cardContainer);
          // Loop through the JSON data and create table rows
          jsonData.slice(0, 4).forEach((item) => {
               let tr = document.createElement("tr");
-
               // Get the values of the current object in the JSON data
               let vals = Object.values(item);
-
               // Loop through the values and create table cells
               vals.forEach((elem) => {
                 let td = document.createElement("td");
@@ -144,7 +135,6 @@ document.body.appendChild(cardContainer);
          container.appendChild(table) // Append the table to the container element
          
       }
-
     fetch('./oll.json')
   .then(response => response.json())
   .then(ollAlgs => {

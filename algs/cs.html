@@ -35,7 +35,35 @@
 </nav>
 <div id="title-cards-container" style="margin: auto;"></div>
 <script>
-const cardData = require('./oll.json')
+const cardData = [{
+  "caseNum": "1",
+  "image": "../assets/visualcube.png",
+  "category": "Dot",
+  "algs": [{
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "1",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "2",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "4",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "6",
+    "date": "2023"
+   }, {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "7",
+    "date": "2023"
+   }]
+}];
 }];
 const cardContainer = document.createElement("div");
 cardContainer.classList.add("card");

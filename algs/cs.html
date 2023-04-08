@@ -83,14 +83,12 @@
          container.appendChild(table) // Append the table to the container element
          
       }
-    
-    // Sample JSON data
-const titles = fetch('./oll.json')
 
 // Get the container element where the title cards will be inserted
 const container = document.getElementById('title-cards-container');
 
 // Loop through the JSON data and create title cards
+function titled(titles) {
 titles.forEach((item) => {
   // Create the title card element
   const titleCard = document.createElement('div');
@@ -114,10 +112,12 @@ titles.forEach((item) => {
   // Append the title card to the container element
   container.appendChild(titleCard);
 });
+}
 
     fetch('./oll.json')
   .then(response => response.json())
   .then(ollAlgs => {
+        titled(ollAlgs)
         ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
         ollAlgs[0].algs.reverse()
         convert(ollAlgs[0].algs) 

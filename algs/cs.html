@@ -37,6 +37,58 @@
 <div id='table_container'/>
 <script> 
 
+const cardData = [{
+  "caseNum": "1",
+  "image": "../assets/visualcube.png",
+  "category": "dot",
+  "algs": [{
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "1",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "2",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "4",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "6",
+    "date": "2023"
+   }, {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "7",
+    "date": "2023"
+   }]
+}];
+
+const cardContainer = document.createElement("div");
+cardContainer.classList.add("card");
+
+const image = document.createElement("img");
+image.src = cardData[0].image;
+image.alt = `Rubik's Cube pattern for case number ${cardData[0].caseNum}`;
+
+const caseNum = document.createElement("div");
+caseNum.classList.add('title');
+caseNum.textContent = `Case number: ${cardData[0].caseNum}`;
+caseNum.style.color = "#AD91FF"; // adding the color style
+
+const category = document.createElement("div");
+category.classList.add('title'); // adding the class
+category.textContent = `Category: ${cardData[0].category}`;
+category.style.color = "#AD91FF"; // adding the color style
+
+cardContainer.appendChild(image);
+cardContainer.appendChild(caseNum);
+cardContainer.appendChild(category);
+
+document.body.appendChild(cardContainer);
 
 
 // Function to convert JSON data to HTML table
@@ -83,57 +135,6 @@
          container.appendChild(table) // Append the table to the container element
          
       }
-
-const cardData = [{
-  "caseNum": "1",
-  "image": "../assets/visualcube.png",
-  "category": "dot",
-  "algs": [{
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "1",
-    "date": "2023"
-   },
-          {
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "2",
-    "date": "2023"
-   },
-          {
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "4",
-    "date": "2023"
-   },
-          {
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "6",
-    "date": "2023"
-   }, {
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "7",
-    "date": "2023"
-   }]
-}];
-
-const cardContainer = document.createElement("div");
-cardContainer.classList.add("card");
-
-const image = document.createElement("img");
-image.src = cardData[0].image;
-image.alt = `Rubik's Cube pattern for case number ${cardData[0].caseNum}`;
-
-const caseNum = document.createElement("div");
-caseNum.classList.add('title');
-caseNum.textContent = `Case number: ${cardData[0].caseNum}`;
-
-const category = document.createElement("div");
-category.textContent = `Category: ${cardData[0].category}`;
-
-cardContainer.appendChild(image);
-cardContainer.appendChild(caseNum);
-cardContainer.appendChild(category);
-
-document.body.appendChild(cardContainer);
-
 
     fetch('./oll.json')
   .then(response => response.json())

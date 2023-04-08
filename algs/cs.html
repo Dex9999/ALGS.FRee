@@ -89,6 +89,7 @@
   .then(response => response.json())
   .then(ollAlgs => {
         ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
+        ollAlgs[0].algs.reverse()
         convert(ollAlgs[0].algs) 
         
     

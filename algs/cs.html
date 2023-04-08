@@ -86,7 +86,7 @@
     fetch('./oll.json')
   .then(response => response.json())
   .then(ollAlgs => {
-        
+        ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
         convert(ollAlgs[0].algs) 
         
     

@@ -123,36 +123,94 @@ document.body.appendChild(cardContainer);
          cols.forEach((item) => {
             let th = document.createElement("th");
             th.innerText = item; // Set the column name as the text of the header cell
-            tr.appendChild(th); // Append the header cell to the header row
-         });
-         thead.appendChild(tr); // Append the header row to the header
-         table.append(tr) // Append the header to the table
-         
-         // Loop through the JSON data and create table rows
-         jsonData.slice(0, 4).forEach((item) => {
-              let tr = document.createElement("tr");
+            tr.appen<div id="cards-container"></div>
+<div id="tables-container"></div>
 
-              // Get the values of the current object in the JSON data
-              let vals = Object.values(item);
-
-              // Loop through the values and create table cells
-              vals.forEach((elem) => {
-                let td = document.createElement("td");
-                td.innerText = elem; // Set the value as the text of the table cell
-                tr.appendChild(td); // Append the table cell to the table row
-              });
-              table.appendChild(tr); // Append the table row to the table
-            });
-         container.appendChild(table) // Append the table to the container element
-         
-      }
-
-    fetch('./oll.json')
+<script>
+fetch('./oll.json')
   .then(response => response.json())
   .then(ollAlgs => {
-        ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
-        ollAlgs[0].algs.reverse()
-        convert(ollAlgs[0].algs) 
+    const cardsContainer = document.getElementById("cards-container");
+    const tablesContainer = document.getElementById("tables-container");
+    
+    ollAlgs.forEach((ollAlg, index) => {
+      // create card
+      const cardContainer = document.createElement("div");
+      cardContainer.classList.add("card");
+      cardContainer.style.width = "300px";
+      cardContainer.style.margin = "auto";
+      cardContainer.style.backgroundColor = "#1D1E28";
+      cardContainer.style.display = "block";
+
+      const caseNum = document.createElement("div");
+      caseNum.classList.add('title');
+      caseNum.textContent = `Case Number: ${ollAlg.caseNum}`;
+      caseNum.style.color = "#AD91FF";
+      caseNum.style.textAlign = "center"; // centering the text
+
+      const image = document.createElement("img");
+      image.src = ollAlg.image;
+      image.alt = `Rubik's Cube pattern for case number ${ollAlg.caseNum}`;
+      image.style.display = "block"; // making the image a block element
+      image.style.margin = "0 auto"; // centering the image horizontally
+
+      const category = document.createElement("div");
+      category.classList.add('subtitle');
+      category.textContent = `Category: ${ollAlg.category}`;
+      category.style.color = "#AD91FF";
+      category.style.textAlign = "center"; // centering the text
+
+      cardContainer.appendChild(caseNum);
+      cardContainer.appendChild(image);
+      cardContainer.appendChild(category);
+
+      cardsContainer.appendChild(cardContainer);
+      
+      // create table
+      const tableContainer = document.createElement("div");
+      tableContainer.classList.add("table");
+      tableContainer.style.width = "300px";
+      tableContainer.style.margin = "auto";
+      
+      const tableTitle = document.createElement("div");
+      tableTitle.classList.add('title');
+      tableTitle.textContent = `Case Number: ${ollAlg.caseNum}`;
+      tableTitle.style.color = "#AD91FF";
+      tableTitle.style.textAlign = "center"; // centering the text
+      
+      const table = document.createElement("table");
+         
+      const thead = document.createElement("thead");
+      const tr = document.createElement("tr");
+         
+      const cols = Object.keys(ollAlg.algs[0]);
+      cols.forEach((item) => {
+        const th = document.createElement("th");
+        th.innerText = item;
+        tr.appendChild(th);
+      });
+      thead.appendChild(tr);
+      table.append(tr);
+         
+      ollAlg.algs.forEach((alg) => {
+        const tr = document.createElement("tr");
+        const vals = Object.values(alg);
+        vals.forEach((elem) => {
+          const td = document.createElement("td");
+          td.innerText = elem;
+          tr.appendChild(td);
+        });
+        table.appendChild(tr);
+      });
+         
+      tableContainer.appendChild(tableTitle);
+      tableContainer.appendChild(table);
+      tablesContainer.appendChild(tableContainer);
+    });
+  })
+  .catch(error => console.error(error));
+</script>
+
         
     
   })

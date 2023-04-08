@@ -33,8 +33,6 @@
         <button class="btn login-btn btn-outline-accent my-2 my-sm-0" style="font-size: 10px !important;font-family: poppins !important;"onClick="copyMe()">Send Feedback to Me on Discord: IceCreamSandwch#9180</button>
     </div>
 </nav>
-<input type="checkbox" name="checkbox" id="checkbox_id" value="value">
-<label for="checkbox_id">Text</label>
 <div id='table_container'/>
 <script> 
 
@@ -76,12 +74,13 @@
               // Loop through the values and create table cells
               vals.forEach((elem) => {
                 let td = document.createElement("td");
-                td.innerText = elem; // Set the value as the text of the table cell
+                td.innerText = elem + <input type="checkbox" name="checkbox" id="checkbox_id" value="value">; // Set the value as the text of the table cell
                 tr.appendChild(td); // Append the table cell to the table row
               });
               table.appendChild(tr); // Append the table row to the table
             });
          container.appendChild(table) // Append the table to the container element
+         
       }
     
     

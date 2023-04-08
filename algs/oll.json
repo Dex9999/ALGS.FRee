@@ -5,7 +5,25 @@
   "algs": [{
     "alg": "R U2 R2 F R F' U2 R' F R F'",
     "votes": "1",
-    "video": "",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "2",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "4",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "6",
+    "date": "2023"
+   }, {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "7",
     "date": "2023"
    }]
 }]

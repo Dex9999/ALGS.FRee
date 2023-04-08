@@ -88,30 +88,43 @@
 const container = document.getElementById('title-cards-container');
 
 // Loop through the JSON data and create title cards
-function titled(titles) {
-titles.forEach((item) => {
-  // Create the title card element
-  const titleCard = document.createElement('div');
-  titleCard.classList.add('title-card');
+function titled(jsonData) {
+  // Get the container element where the title cards will be inserted
+  let container = document.getElementById("card_container");
 
-  // Create the title element
-  const title = document.createElement('h2');
-  title.innerText = item.title;
-  titleCard.appendChild(title);
+  // Loop through the JSON data and create title cards
+  jsonData.forEach((item) => {
+    // Create the title card element
+    let card = document.createElement("div");
+    card.classList.add("title-card");
 
-  // Create the description element
-  const description = document.createElement('p');
-  description.innerText = item.description;
-  titleCard.appendChild(description);
+    // Create the image element
+    let img = document.createElement("img");
+    img.src = item.image;
+    img.alt = "OLL Case " + item.caseNum;
+    card.appendChild(img);
 
-  // Create the image element
-  const image = document.createElement('img');
-  image.src = item.imageUrl;
-  titleCard.appendChild(image);
+    // Create the category element
+    let category = document.createElement("h2");
+    category.innerText = item.category;
+    card.appendChild(category);
 
-  // Append the title card to the container element
-  container.appendChild(titleCard);
-});
+    // Create the list element for the algorithms
+    let algList = document.createElement("ul");
+
+    // Loop through the algorithms and create list items
+    item.algs.forEach((alg) => {
+      let li = document.createElement("li");
+      li.innerText = alg.alg + " (" + alg.votes + " votes)";
+      algList.appendChild(li);
+    });
+
+    // Append the list to the title card
+    card.appendChild(algList);
+
+    // Append the title card to the container element
+    container.appendChild(card);
+  });
 }
 
     fetch('./oll.json')

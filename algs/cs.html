@@ -40,7 +40,7 @@
 const cardData = [{
   "caseNum": "1",
   "image": "../assets/visualcube.png",
-  "category": "dot",
+  "category": "Dot",
   "algs": [{
     "alg": "R U2 R2 F R F' U2 R' F R F'",
     "votes": "1",
@@ -69,26 +69,33 @@ const cardData = [{
 
 const cardContainer = document.createElement("div");
 cardContainer.classList.add("card");
+cardContainer.style.width = "300px";
+cardContainer.style.backgroundColor = "#1D1E28";
+
+const caseNum = document.createElement("div");
+caseNum.classList.add('title');
+caseNum.textContent = `Case Number: ${cardData[0].caseNum}`;
+caseNum.style.color = "#AD91FF";
+caseNum.style.textAlign = "center"; // centering the text
 
 const image = document.createElement("img");
 image.src = cardData[0].image;
 image.alt = `Rubik's Cube pattern for case number ${cardData[0].caseNum}`;
-
-const caseNum = document.createElement("div");
-caseNum.classList.add('title');
-caseNum.textContent = `Case number: ${cardData[0].caseNum}`;
-caseNum.style.color = "#AD91FF"; // adding the color style
+image.style.display = "block"; // making the image a block element
+image.style.margin = "0 auto"; // centering the image horizontally
 
 const category = document.createElement("div");
-category.classList.add('title'); // adding the class
+category.classList.add('title');
 category.textContent = `Category: ${cardData[0].category}`;
-category.style.color = "#AD91FF"; // adding the color style
+category.style.color = "#AD91FF";
+category.style.textAlign = "center"; // centering the text
 
-cardContainer.appendChild(image);
 cardContainer.appendChild(caseNum);
+cardContainer.appendChild(image);
 cardContainer.appendChild(category);
 
 document.body.appendChild(cardContainer);
+
 
 
 // Function to convert JSON data to HTML table

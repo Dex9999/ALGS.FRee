@@ -33,10 +33,10 @@
         <button class="btn login-btn btn-outline-accent my-2 my-sm-0" style="font-size: 10px !important;font-family: poppins !important;"onClick="copyMe()">Send Feedback to Me on Discord: IceCreamSandwch#9180</button>
     </div>
 </nav>
-<div id="title-cards-container"></div>
-<div id='table_container'/>
-<script> 
 
+<div id="title-cards-container"></div>
+
+<script>
 const cardData = [{
   "caseNum": "1",
   "image": "../assets/visualcube.png",
@@ -95,9 +95,11 @@ cardContainer.appendChild(image);
 cardContainer.appendChild(category);
 
 document.body.appendChild(cardContainer);
+</script>
 
+<div id='table_container'/>
 
-
+<script> 
 // Function to convert JSON data to HTML table
       function convert(jsonData) {
          

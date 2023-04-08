@@ -33,6 +33,7 @@
         <button class="btn login-btn btn-outline-accent my-2 my-sm-0" style="font-size: 10px !important;font-family: poppins !important;"onClick="copyMe()">Send Feedback to Me on Discord: IceCreamSandwch#9180</button>
     </div>
 </nav>
+<div id="title-cards-container"></div>
 <div id='table_container'/>
 <script> 
 
@@ -83,7 +84,53 @@
          
       }
     
-    
+    // Sample JSON data
+const titles = [
+  {
+    title: 'Title 1',
+    description: 'Description 1',
+    imageUrl: 'https://example.com/image1.jpg'
+  },
+  {
+    title: 'Title 2',
+    description: 'Description 2',
+    imageUrl: 'https://example.com/image2.jpg'
+  },
+  {
+    title: 'Title 3',
+    description: 'Description 3',
+    imageUrl: 'https://example.com/image3.jpg'
+  }
+];
+
+// Get the container element where the title cards will be inserted
+const container = document.getElementById('title-cards-container');
+
+// Loop through the JSON data and create title cards
+titles.forEach((item) => {
+  // Create the title card element
+  const titleCard = document.createElement('div');
+  titleCard.classList.add('title-card');
+
+  // Create the title element
+  const title = document.createElement('h2');
+  title.innerText = item.title;
+  titleCard.appendChild(title);
+
+  // Create the description element
+  const description = document.createElement('p');
+  description.innerText = item.description;
+  titleCard.appendChild(description);
+
+  // Create the image element
+  const image = document.createElement('img');
+  image.src = item.imageUrl;
+  titleCard.appendChild(image);
+
+  // Append the title card to the container element
+  container.appendChild(titleCard);
+});
+
     fetch('./oll.json')
   .then(response => response.json())
   .then(ollAlgs => {

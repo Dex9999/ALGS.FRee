@@ -9,6 +9,21 @@ body {
     font-size: 16px;
 }
 
+
+table, th, td {
+  border: 1px solid !important;    
+  border-color: #AD91FF !important;
+    width:'80%' !important;
+  text-align: center !important;
+    margin-left: auto;
+  margin-right: auto;
+padding: 10px !important; 
+}
+
+#table_container {
+    color: #AD91FF !important;
+}
+
 .nav-link {
      font-size: 14px !important;
      background: transparent !important;
@@ -111,7 +126,6 @@ body {
 }
 
 .card:hover {
-    color: #ffffff !important;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19) !important;
 }
 
@@ -172,6 +186,10 @@ body {
     border-radius: 22px !important;
     border: 4px solid #AD91FF;
 }
+.features .card:hover {
+    background-color: #464857;
+}
+
 .features .card-text {
 color: rgba(255, 255, 255, 0.46) !important
 }

@@ -33,7 +33,6 @@
         <button class="btn login-btn btn-outline-accent my-2 my-sm-0" style="font-size: 10px !important;font-family: poppins !important;"onClick="copyMe()">Send Feedback to Me on Discord: IceCreamSandwch#9180</button>
     </div>
 </nav>
-<div id="title-cards-container" style="margin: auto;"></div>
 <script>
 const cardData = [{
   "caseNum": "1",
@@ -64,32 +63,35 @@ const cardData = [{
     "date": "2023"
    }]
 }];
+function cardGen(cardData){
 const cardContainer = document.createElement("div");
 cardContainer.classList.add("card");
 cardContainer.style.width = "300px";
 cardContainer.style.margin = "auto";
 cardContainer.style.backgroundColor = "#1D1E28";
 cardContainer.style.display = "block";
+//id="title-cards-container" style="margin: auto;"
 
 const caseNum = document.createElement("div");
 caseNum.classList.add('title');
-caseNum.textContent = `Case Number: ${cardData[0].caseNum}`;
+caseNum.textContent = `Case Number: ${cardData.caseNum}`;
 caseNum.style.color = "#AD91FF";
 caseNum.style.textAlign = "center"; // centering the text
 const image = document.createElement("img");
-image.src = cardData[0].image;
-image.alt = `Rubik's Cube pattern for case number ${cardData[0].caseNum}`;
+image.src = cardData.image;
+image.alt = `Rubik's Cube pattern for case number ${cardData.caseNum}`;
 image.style.display = "block"; // making the image a block element
 image.style.margin = "0 auto"; // centering the image horizontally
 const category = document.createElement("div");
 category.classList.add('subtitle');
-category.textContent = `Category: ${cardData[0].category}`;
+category.textContent = `Category: ${cardData.category}`;
 category.style.color = "#AD91FF";
 category.style.textAlign = "center"; // centering the text
 cardContainer.appendChild(caseNum);
 cardContainer.appendChild(image);
 cardContainer.appendChild(category);
 document.body.appendChild(cardContainer);
+}
 </script>
 <div id='table_container'/>
 <script> 
@@ -98,7 +100,7 @@ document.body.appendChild(cardContainer);
          
          
          // Get the container element where the table will be inserted
-         let container = document.getElementById("table_container");
+         let container = document.createElement("div");
          
          // Create the table element
          let table = document.createElement("table");
@@ -139,6 +141,7 @@ document.body.appendChild(cardContainer);
   .then(response => response.json())
   .then(ollAlgs => {
         console.log(ollAlgs);
+        cardGen(ollAlgs);
         ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
         ollAlgs[0].algs.reverse()
         convert(ollAlgs[0].algs) 

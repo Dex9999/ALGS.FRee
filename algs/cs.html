@@ -98,7 +98,7 @@ document.body.appendChild(cardContainer);
 // Function to convert JSON data to HTML table
       function convert(jsonData) {
          let tb = document.createElement("div")
-         tb.id = 'table_container'
+         tb.setAttribute("id", "table_container");
          // Get the container element where the table will be inserted
          let container = getElementById('table_container');
          

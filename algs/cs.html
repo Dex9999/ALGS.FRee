@@ -34,7 +34,7 @@
     </div>
 </nav>
 <script>
-const cardData = [{
+const cardD = {
   "caseNum": "1",
   "image": "../assets/visualcube.png",
   "category": "Dot",
@@ -62,7 +62,7 @@ const cardData = [{
     "votes": "7",
     "date": "2023"
    }]
-}];
+};
 function cardGen(cardData){
 const cardContainer = document.createElement("div");
 cardContainer.classList.add("card");
@@ -141,7 +141,7 @@ document.body.appendChild(cardContainer);
   .then(response => response.json())
   .then(ollAlgs => {
         console.log(ollAlgs);
-        cardGen(ollAlgs);
+        cardGen(cardD);
         ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
         ollAlgs[0].algs.reverse()
         convert(ollAlgs[0].algs) 

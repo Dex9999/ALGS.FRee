@@ -141,7 +141,7 @@ document.body.appendChild(cardContainer);
   .then(response => response.json())
   .then(ollAlgs => {
         console.log(ollAlgs);
-        cardGen(cardD);
+        cardGen(ollAlgs[0]);
         ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
         ollAlgs[0].algs.reverse()
         convert(ollAlgs[0].algs) 

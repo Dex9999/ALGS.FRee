@@ -108,10 +108,10 @@ document.body.appendChild(cardContainer);
          container.appendChild(table) // Append the table to the container element
          document.body.appendChild(container);
       }
-      fetch('oll.json')
+      fetch('setJson.json')
         .then(response => response.json())
-        .then(ollAlgs => {
-          ollAlgs.forEach((obj) => {
+        .then(setAlgs => {
+          setAlgs.forEach((obj) => {
             cardGen(obj);
             obj.algs.sort(function(a, b){return a.votes - b.votes});
             obj.algs.reverse();

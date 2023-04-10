@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     } else if(req.url === '/cs') {  
         modifyHtml('cs', res)
     } else {
-        res.status(404).sendFile('static/404.html', {root: __dirname});
+        res.status(404).send(req.url, {root: __dirname});
     }
 
     function modifyHtml(set, res) {

@@ -1,9 +1,38 @@
 [{
   "caseNum": "1",
-  "image": "../assets/visualcube.png",
+  "image": "http://cubiclealgdbimagegen.azurewebsites.net/generator?&puzzle=3&case=R%20U2%20R2%27%20F%20R%20F%27%20U2%20R%27%20F%20R%20F%27&view=trans&stage=oll",
   "category": "Dot",
   "algs": [{
     "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "1",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "2",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "4",
+    "date": "2023"
+   },
+          {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "6",
+    "date": "2023"
+   }, {
+    "alg": "R U2 R2 F R F' U2 R' F R F'",
+    "votes": "7",
+    "date": "2023"
+   }]
+},
+{
+  "caseNum": "2",
+  "image": "http://cubiclealgdbimagegen.azurewebsites.net/generator?&puzzle=3&case=F%20R%20U%20R%27%20U%27%20F%27%20f%20R%20U%20R%27%20U%27%20f%27&view=trans&stage=oll",
+  "category": "Dot",
+  "algs": [{
+    "alg": "F R U R' U' F' f R U R' U' f'",
     "votes": "1",
     "date": "2023"
    },

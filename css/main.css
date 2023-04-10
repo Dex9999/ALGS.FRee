@@ -34,6 +34,7 @@ padding: 10px !important;
      background: transparent !important;
      color: #AD91FF !important;
      font-weight: bold !important;
+     cursor:pointer;
  }
 
  .login-btn {

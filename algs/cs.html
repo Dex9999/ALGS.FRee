@@ -21,10 +21,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 20px !important">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#/">Algorithms <span class="sr-only">(current)</span></a>
+                <a class="nav-link" onclick="window.location='../'">Algorithms <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Reconstructions</a>
+                <a class="nav-link" onclick="window.location='../'">Reconstructions</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="https://cstimer.net/" target="_blank">Practice</a>
@@ -34,35 +34,7 @@
     </div>
 </nav>
 <script>
-const cardD = {
-  "caseNum": "1",
-  "image": "../assets/visualcube.png",
-  "category": "Dot",
-  "algs": [{
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "1",
-    "date": "2023"
-   },
-          {
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "2",
-    "date": "2023"
-   },
-          {
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "4",
-    "date": "2023"
-   },
-          {
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "6",
-    "date": "2023"
-   }, {
-    "alg": "R U2 R2 F R F' U2 R' F R F'",
-    "votes": "7",
-    "date": "2023"
-   }]
-};
+  
 function cardGen(cardData){
 const cardContainer = document.createElement("div");
 cardContainer.classList.add("card");
@@ -99,13 +71,14 @@ document.body.appendChild(cardContainer);
       function convert(jsonData) {
          // Get the container element where the table will be inserted
          let container = document.createElement("div");
-         
+         container.setAttribute("id","table_container")
+
          // Create the table element
          let table = document.createElement("table");
          
          // Get the keys (column names) of the first object in the JSON data
          let cols = Object.keys(jsonData[0]);
-         
+
          // Create the header element
          let thead = document.createElement("thead");
          let tr = document.createElement("tr");
@@ -133,20 +106,20 @@ document.body.appendChild(cardContainer);
               table.appendChild(tr); // Append the table row to the table
             });
          container.appendChild(table) // Append the table to the container element
-         
+         document.body.appendChild(container);
       }
-    fetch('./oll.json')
-  .then(response => response.json())
-  .then(ollAlgs => {
-        console.log(ollAlgs);
-        cardGen(ollAlgs[0]);
-        ollAlgs[0].algs.sort(function(a, b){return a.votes - b.votes});
-        ollAlgs[0].algs.reverse()
-        convert(ollAlgs[0].algs) 
-        
-    
-  })
-  .catch(error => console.error(error));
+      fetch('./oll.json')
+        .then(response => response.json())
+        .then(ollAlgs => {
+          ollAlgs.forEach((obj) => {
+            cardGen(obj);
+            obj.algs.sort(function(a, b){return a.votes - b.votes});
+            obj.algs.reverse();
+            convert(obj.algs);
+          });
+        })
+        .catch(error => console.error(error));
+
     
     
 </script>

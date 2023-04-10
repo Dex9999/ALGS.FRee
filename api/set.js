@@ -26,7 +26,7 @@ export default function handler(req, res) {
     });
 
     await pipelineAsync(
-      createReadStream('static/set.html'),
+      createReadStream('../static/set.html'),
       newLineStream(),
       parser,
       res

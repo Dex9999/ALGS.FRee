@@ -1,35 +1,23 @@
-import { createReadStream } from 'fs';
-import { pipeline } from 'stream';
-import { promisify } from 'util';
-import newLineStream from 'new-line';
+const fs = require('fs');
 
-export default function handler(req, res) {
-  if (req.url === '/oll') {
-    modifyHtml('oll', res);
-  } else if (req.url === '/pll') {
-    modifyHtml('pll', res);
-  } else if (req.url === '/cs') {
-    modifyHtml('cs', res);
+module.exports = async (req, res) => {
+  if (req.url === '/pll' ||
+    req.url === '/oll' ||
+    req.url === '/cs' ||
+    req.url === '/zbll'){
+    // Read in the HTML file
+    const html = fs.readFileSync('../static/set.html', 'utf8');
+
+    // Replace "setJson" with req.url without slashes
+    const updatedHtml = html.replace('setJson', req.url.replace(/\//g, ''));
+
+    // Set the content type header to HTML
+    res.setHeader('Content-Type', 'text/html');
+
+    // Return the updated HTML as the response
+    res.send(updatedHtml);
   } else {
-    res.status(404).sendFile('static/404.html', { root: __dirname });
+    // If the req.url is not, return a 404 error
+    res.status(404).send('Not Found');
   }
-
-  async function modifyHtml(set, res) {
-    const pipelineAsync = promisify(pipeline);
-    const parser = new Transform({
-      transform: function (data, encoding, done) {
-        let str = data.toString();
-        str = str.replace('setJson', [set]);
-        this.push(str);
-        done();
-      },
-    });
-
-    await pipelineAsync(
-      createReadStream('../static/set.html'),
-      newLineStream(),
-      parser,
-      res
-    );
-  }
-}
+};

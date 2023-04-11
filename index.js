@@ -20,7 +20,7 @@ function checkPageForLink(req, res) {
   const url = req.url;
   if (url === '/oll') {
     const html = fs.readFileSync('/static/set.html', 'utf8')
-    const replacedHtml = html.replace('setJson', req.url.replace(/\//g, ''));
+    const replacedHtml = html.toString().replace('setJson', req.url.replace(/\//g, ''));
     res.send(replacedHtml);
   }
 }

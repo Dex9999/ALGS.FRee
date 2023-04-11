@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname+'/static/css')))
 function checkPageForLink(req, res) {
   const url = req.url;
   if (url === '/oll') {
-    const html = fs.readFile('/static/set.html', 'utf8')
+    const html = fs.readFileSync('/static/set.html', 'utf8')
     const replacedHtml = html.replace('setJson', req.url.replace(/\//g, ''));
     res.send(replacedHtml);
   }

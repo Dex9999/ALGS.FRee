@@ -3,18 +3,25 @@ import { pipeline } from 'stream';
 import { promisify } from 'util';
 import newLineStream from 'new-line';
 
-export default function handler(req, res) {
-  if (req.url === '/oll') {
-    modifyHtml('oll', res);
-  } else if (req.url === '/pll') {
-    modifyHtml('pll', res);
-  } else if (req.url === '/cs') {
-    modifyHtml('cs', res);
-  } else {
-    res.status(404).sendFile('static/404.html', { root: __dirname });
-  }
+module.exports = async (req, res) => {
+	try {
+		
+		// Strip leading slash from request path
+		const url = req.url.replace(/^\/+/, '')
 
-  async function modifyHtml(set, res) {
+		console.log(`Url: ${ url }`)
+		const html = modifyHtml(url, res);
+
+		if (!html) return res.status(400).send('Error: could not get page')
+
+	} catch (err) {
+		if (err.message === 'Protocol error (Page.navigate): Cannot navigate to invalid URL')
+			return res.status(404).end()
+
+		console.error(err)
+		res.status(500).send('Error: Please try again.')
+	}
+    async function modifyHtml(set, res) {
     const pipelineAsync = promisify(pipeline);
     const parser = new Transform({
       transform: function (data, encoding, done) {
@@ -29,6 +36,7 @@ export default function handler(req, res) {
       createReadStream('../static/set.html'),
       newLineStream(),
       parser,
+      res.setHeader('Content-Type', 'text/html'),
       res
     );
   }

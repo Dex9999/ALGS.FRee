@@ -19,15 +19,7 @@ app.use(express.static(path.join(__dirname+'/static/css')))
 function checkPageForLink(req, res) {
   const url = req.url;
   if (url === '/oll') {
-    const html = `<html>
-      <head>
-        <title>OLL</title>
-      </head>
-      <body>
-        <p>This is the oll page</p>
-        <p>setJson has been replaced with oll</p>
-      </body>
-    </html>`;
+    const html = 'pis'
     const replacedHtml = html.replace('setJson', 'oll');
     res.send(replacedHtml);
   }
@@ -39,13 +31,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Error handling
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
-
-// Route handler
+//for every link check if it matches
 app.get('*', checkPageForLink);
 
 app.get("/", (req, res) => {

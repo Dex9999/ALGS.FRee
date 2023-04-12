@@ -2,6 +2,7 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 
+//express stuff
 const express = require('express');
 const { response } = require('express');
 const app = express()
@@ -16,13 +17,16 @@ app.use(express.static(path.join(__dirname+'/public/css')))
  * @param {Object} req - The request object
  * @param {Object} res - The response object
  */
-function checkPageForLink(req, res) {
+async function checkPageForLink(req, res) {
   const url = req.url;
   if (url === '/oll'||
       url === '/pll'||
       url === '/cs') {
+    const set = req.url.replace(/\//g, '')
+    const json = await fetchFromMongoDB(set);
     const html = fs.readFileSync('public/set.html', 'utf8')
-    const replacedHtml = html.toString().replace('[setJson]', req.url.replace(/\//g, ''));
+    const replacedHtml = html.toString().replace('{setJson}', json);
+    console.log(replacedHtml)
     res.send(replacedHtml);
   }
 }
@@ -46,3 +50,14 @@ app.use(function(req, res) {
 
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
+
+async function fetchFromMongoDB(set){
+  //mongoose stuff
+  const mongoose = require('mongoose');
+  mongoose.set('strictQuery', false);
+  await mongoose.connect(process.env.MONGOURI);
+  console.log('Connected to MongoDB!');
+  
+  const Case = require('./cubeSchema.js');
+  return await Case.find({},{'_id':0});
+}

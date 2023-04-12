@@ -95,53 +95,24 @@ function convert(jsonData) {
   container.appendChild(table);
   document.body.appendChild(container);
 }
+// load data, {'setJson'} is the JSON replaced before page loads in index.js
+try {
+  const setAlgs = [{setJson}]
+  console.log(setAlgs[0])
+  setAlgs.forEach((obj) => {
+  cardGen(obj);
+  // obj.algs.sort(function(a, b){return a.votes - b.votes});
+  // obj.algs.reverse();
+  // convert(obj.algs);
+  })
+} catch (error) {
+  console.log(error)
+}
 
-      fetch('[setJson].json')
-        .then(response => response.json())
-        .then(setAlgs => {
-          setAlgs.forEach((obj) => {
-            cardGen(obj);
-            obj.algs.sort(function(a, b){return a.votes - b.votes});
-            obj.algs.reverse();
-            convert(obj.algs);
-          });
-        })
-        .catch(error => console.error(error));
-
-    
-    
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="js/now-ui-kit.min.js"></script>
-<script>
-const mongoose = require('mongoose');
-const Cube = require('./cubeSchema.js');
-const button = document.createElement("button");
-button.setAttribute("id", "save-button");
-button.textContent = "Add Alg";
-
-button.addEventListener('click', async () => {
-  const newAlg = { alg: `R U2 R2 F R F' U2 R' F R F'`, votes: '5', date: '2023' };
-  const cube = new Cube({
-    caseNum: '1',
-    image: 'http://cubiclealgdbimagegen.azurewebsites.net/generator?&puzzle=3&case=R%20U2%20R2%27%20F%20R%20F%27%20U2%20R%27%20F%20R%20F%27&view=trans&stage=oll',
-    category: 'Dot',
-    algs: [newAlg]
-  });
-
-  try {
-    await mongoose.connect(process.env.MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true });
-    await cube.save();
-    console.log('Cube saved successfully!');
-  } catch (error) {
-    console.error(error);
-  } finally {
-    mongoose.disconnect();
-  }
-});
-document.body.appendChild(button);
-</script>
 </body>
 </html>

@@ -34,81 +34,69 @@
     </div>
 </nav>
 <script>
-  
-function cardGen(cardData){
-const cardContainer = document.createElement("div");
-cardContainer.classList.add("card");
-cardContainer.style.width = "300px";
-cardContainer.style.margin = "auto";
-cardContainer.style.backgroundColor = "#1D1E28";
-cardContainer.style.display = "block";
-//id="title-cards-container" style="margin: auto;"
+function cardGen(cardData) {
+  const cardContainer = document.createElement("div");
+  cardContainer.classList.add("card");
+  cardContainer.style.cssText = "width: 300px; margin: auto; background-color: #1D1E28; display: block;";
 
-const caseNum = document.createElement("div");
-caseNum.classList.add('title');
-caseNum.textContent = `Case Number: ${cardData.caseNum}`;
-caseNum.style.color = "#AD91FF";
-caseNum.style.textAlign = "center"; // centering the text
-const image = document.createElement("img");
-image.src = cardData.image;
-image.alt = `Rubik's Cube pattern for case number ${cardData.caseNum}`;
-image.style.display = "block"; // making the image a block element
-image.style.margin = "0 auto"; // centering the image horizontally
-const category = document.createElement("div");
-category.classList.add('subtitle');
-category.textContent = `Category: ${cardData.category}`;
-category.style.color = "#AD91FF";
-category.style.textAlign = "center"; // centering the text
-cardContainer.appendChild(caseNum);
-cardContainer.appendChild(image);
-cardContainer.appendChild(category);
-document.body.appendChild(cardContainer);
+  const caseNum = document.createElement("div");
+  caseNum.classList.add('title');
+  caseNum.textContent = `Case Number: ${cardData.caseNum}`;
+  caseNum.style.cssText = "color: #AD91FF; text-align: center;";
+
+  const image = document.createElement("img");
+  image.src = cardData.image;
+  image.alt = `Rubik's Cube pattern for case number ${cardData.caseNum}`;
+  image.style.cssText = "display: block; margin: 0 auto;"; // chaining style changes
+
+  const category = document.createElement("div");
+  category.classList.add('subtitle');
+  category.textContent = `Category: ${cardData.category}`;
+  category.style.cssText = "color: #AD91FF; text-align: center;";
+
+  cardContainer.appendChild(caseNum);
+  cardContainer.appendChild(image);
+  cardContainer.appendChild(category);
+  document.body.appendChild(cardContainer);
 }
 </script>
 
 <script> 
 // Function to convert JSON data to HTML table
-      function convert(jsonData) {
-         // Get the container element where the table will be inserted
-         let container = document.createElement("div");
-         container.setAttribute("id","table_container")
+function convert(jsonData) {
+  const container = document.createElement("div");
+  container.setAttribute("id", "table_container");
+  
+  const table = document.createElement("table");
+  
+  const cols = Object.keys(jsonData[0]);
+  
+  const thead = document.createElement("thead");
+  const tr = document.createElement("tr");
+  cols.forEach((item) => {
+    const th = document.createElement("th");
+    th.innerText = item;
+    tr.appendChild(th);
+  });
+  thead.appendChild(tr);
+  table.appendChild(thead);
+  
+  jsonData.slice(0, 4).forEach((item) => {
+    const tr = document.createElement("tr");
+    const vals = Object.values(item);
+    vals.forEach((elem) => {
+      const td = document.createElement("td");
+      td.innerText = elem;
+      tr.appendChild(td);
+    });
+    table.appendChild(tr);
+  });
+  
+  container.appendChild(table);
+  document.body.appendChild(container);
+}
 
-         // Create the table element
-         let table = document.createElement("table");
-         
-         // Get the keys (column names) of the first object in the JSON data
-         let cols = Object.keys(jsonData[0]);
-
-         // Create the header element
-         let thead = document.createElement("thead");
-         let tr = document.createElement("tr");
-         
-         // Loop through the column names and create header cells
-         cols.forEach((item) => {
-            let th = document.createElement("th");
-            th.innerText = item; // Set the column name as the text of the header cell
-            tr.appendChild(th); // Append the header cell to the header row
-         });
-         thead.appendChild(tr); // Append the header row to the header
-         table.append(tr) // Append the header to the table
-         
-         // Loop through the JSON data and create table rows
-         jsonData.slice(0, 4).forEach((item) => {
-              let tr = document.createElement("tr");
-              // Get the values of the current object in the JSON data
-              let vals = Object.values(item);
-              // Loop through the values and create table cells
-              vals.forEach((elem) => {
-                let td = document.createElement("td");
-                td.innerText = elem; // Set the value as the text of the table cell
-                tr.appendChild(td); // Append the table cell to the table row
-              });
-              table.appendChild(tr); // Append the table row to the table
-            });
-         container.appendChild(table) // Append the table to the container element
-         document.body.appendChild(container);
-      }
-      fetch('setJson.json')
+      fetch('[setJson].json')
         .then(response => response.json())
         .then(setAlgs => {
           setAlgs.forEach((obj) => {
@@ -127,5 +115,33 @@ document.body.appendChild(cardContainer);
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="js/now-ui-kit.min.js"></script>
+<script>
+const mongoose = require('mongoose');
+const Cube = require('./cubeSchema.js');
+const button = document.createElement("button");
+button.setAttribute("id", "save-button");
+button.textContent = "Add Alg";
+
+button.addEventListener('click', async () => {
+  const newAlg = { alg: `R U2 R2 F R F' U2 R' F R F'`, votes: '5', date: '2023' };
+  const cube = new Cube({
+    caseNum: '1',
+    image: 'http://cubiclealgdbimagegen.azurewebsites.net/generator?&puzzle=3&case=R%20U2%20R2%27%20F%20R%20F%27%20U2%20R%27%20F%20R%20F%27&view=trans&stage=oll',
+    category: 'Dot',
+    algs: [newAlg]
+  });
+
+  try {
+    await mongoose.connect(process.env.MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    await cube.save();
+    console.log('Cube saved successfully!');
+  } catch (error) {
+    console.error(error);
+  } finally {
+    mongoose.disconnect();
+  }
+});
+document.body.appendChild(button);
+</script>
 </body>
 </html>

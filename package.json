@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "vercel": "C:/Users/razor/.npm-global/vercel dev"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   "homepage": "https://github.com/Dex9999/dex9999.github.io#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "mongoose": "^7.0.3",
     "new-line": "^1.1.1",
     "nodemon": "^2.0.22",
     "sr-puzzlegen": "^1.0.4"

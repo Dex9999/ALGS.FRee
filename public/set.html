@@ -97,13 +97,12 @@ function convert(jsonData) {
 }
 // load data, {'setJson'} is the JSON replaced before page loads in index.js
 try {
-  const setAlgs = [{setJson}]
-  console.log(setAlgs[0])
+  const setAlgs = [{setJson}];
   setAlgs.forEach((obj) => {
   cardGen(obj);
-  // obj.algs.sort(function(a, b){return a.votes - b.votes});
-  // obj.algs.reverse();
-  // convert(obj.algs);
+  obj.algs.sort(function(a, b){return a.votes - b.votes});
+  obj.algs.reverse();
+  convert(obj.algs);
   })
 } catch (error) {
   console.log(error)

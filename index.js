@@ -57,7 +57,7 @@ async function fetchFromMongoDB(set){
   mongoose.set('strictQuery', false);
   await mongoose.connect(process.env.MONGOURI);
   console.log('Connected to MongoDB!');
-  
+
   const Case = require('./cubeSchema.js');
   return await Case.find({},{'_id':0});
 }

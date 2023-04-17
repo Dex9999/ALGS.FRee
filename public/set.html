@@ -37,14 +37,14 @@
 function cardGen(cardData) {
   const cardContainer = document.createElement("div");
   cardContainer.classList.add("card");
-  cardContainer.style.cssText = "width: 300px; margin: auto; background-color: #1D1E28; display: block;";
+  cardContainer.style.cssText = "width: 300px; margin: auto; background-color: #1D1E28; display: block; margin-top: 50px;";
   cardContainer.style.height = "475px";
 
 
   const caseNum = document.createElement("div");
   caseNum.classList.add('title');
   caseNum.textContent = `Case Number: ${cardData.caseNum}`;
-  caseNum.style.cssText = "color: #AD91FF; text-align: center; margin-top: -50px;";
+  caseNum.style.cssText = "color: #AD91FF; text-align: center; margin-top: 10px;";
 
   const image = document.createElement("img");
   image.src = cardData.image;

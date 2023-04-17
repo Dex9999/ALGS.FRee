@@ -42,7 +42,7 @@ function cardGen(cardData) {
   const caseNum = document.createElement("div");
   caseNum.classList.add('title');
   caseNum.textContent = `Case Number: ${cardData.caseNum}`;
-  caseNum.style.cssText = "color: #AD91FF; text-align: center;";
+  caseNum.style.cssText = "color: #AD91FF; text-align: center; margin-top: 10px;";
 
   const image = document.createElement("img");
   image.src = cardData.image;
@@ -52,7 +52,7 @@ function cardGen(cardData) {
   const category = document.createElement("div");
   category.classList.add('subtitle');
   category.textContent = `Category: ${cardData.category}`;
-  category.style.cssText = "color: #AD91FF; text-align: center;";
+  category.style.cssText = "color: #AD91FF !important; text-align: center;";
 
   cardContainer.appendChild(caseNum);
   cardContainer.appendChild(image);

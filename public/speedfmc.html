@@ -130,7 +130,7 @@ function stopWatch() {
         if (count < 10) {
             countString = "0" + countString;
         }
-        countString.slice(0, -1)
+        countString = Math.floor(countString / 10);
         
         document.getElementById('min').innerHTML = minString;
         document.getElementById('sec').innerHTML = secString;

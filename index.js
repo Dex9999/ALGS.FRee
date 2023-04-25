@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/speedfmc", (req, res) => {
-    res.type('html').sendFile('public/speedfmc.html', {root: __dirname});
+    res.type('html').send('public/speedfmc.html', {root: __dirname});
 })
 
 app.use(function(req, res) {

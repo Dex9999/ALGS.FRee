@@ -51,8 +51,20 @@ startBtn.addEventListener('click', function () {
 document.onkeyup = function (e) {
     e = e || window.event;
     // use e.keyCode
-    if(e.keyCode == 32){
-     window.alert("Space Released!")
+    if(e.keyCode == 32 && timer == false){
+     timer = true;
+     stopWatch();
+    }
+    if(e.keyCode == 32 && timer == true){
+     timer = false;
+     hour = 0;
+     minute = 0;
+     second = 0;
+     count = 0;
+     document.getElementById('hr').innerHTML = "00";
+     document.getElementById('min').innerHTML = "00";
+     document.getElementById('sec').innerHTML = "00";
+     document.getElementById('count').innerHTML = "00";
     }
 };
   

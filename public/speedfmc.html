@@ -130,10 +130,11 @@ function stopWatch() {
         if (count < 10) {
             countString = "0" + countString;
         }
+        countString.slice(0, -1)
         
         document.getElementById('min').innerHTML = minString;
         document.getElementById('sec').innerHTML = secString;
-        document.getElementById('count').innerHTML = countString.slice(0, -1);
+        document.getElementById('count').innerHTML = countString;
         setTimeout(stopWatch, 10);
     }
 }

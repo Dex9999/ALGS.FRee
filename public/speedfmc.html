@@ -16,11 +16,14 @@
 <div class="container">
         <h1 class="card-title" style="font-size: 50px !important;">Scramble:<br>B R U2 B U2 B L2 F L2 F' L2 D2 F L' U F' R2 B L U2</h1>
         <div id="time">
-            <span class="digit" id="min" class="card-title" style="font-size: 100px !important;">
+            <span class="digit" id="min" style="font-size: 100px !important; font-weight: 600 !important;
+    color: #AD91FF !important;">
               00</span>
-            <span class="digit" id="sec" class="card-title" style="font-size: 100px !important;">
+            <span class="digit" id="sec" style="font-size: 100px !important; font-weight: 600 !important;
+    color: #AD91FF !important;">
               00</span>
-            <span class="digit" id="count" class="card-title" style="font-size: 50px !important;">
+            <span class="digit" id="count" style="font-size: 100px !important; font-weight: 600 !important;
+    color: #AD91FF !important;">
               00</span>
         </div>
         <div id="buttons">
@@ -51,11 +54,11 @@ startBtn.addEventListener('click', function () {
 document.onkeyup = function (e) {
     e = e || window.event;
     // use e.keyCode
-    if(e.keyCode == 32 && timer == false){
+    if(e.keyCode == 32){
      timer = true;
      stopWatch();
     }
-    if(e.keyCode == 32 && timer == true){
+    if(e.keyCode == 13){
      timer = false;
      hour = 0;
      minute = 0;

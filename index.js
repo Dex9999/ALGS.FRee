@@ -41,7 +41,11 @@ app.use((req, res, next) => {
 app.get('*', checkPageForLink);
 
 app.get("/", (req, res) => {
-    res.type('html').sendFile('index.html', {root: __dirname});
+    res.type('html').sendFile('public/index.html', {root: __dirname});
+})
+
+app.get("/speedfmc", (req, res) => {
+    res.type('html').sendFile('public/speedfmc.html', {root: __dirname});
 })
 
 app.use(function(req, res) {

@@ -9,23 +9,17 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700,800,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700,800,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900&display=swap" rel="stylesheet">
-    <title>Speed FMC Tool</title>
+    <title>IceCreamSandwch's Speed FMC Tool</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
 <div class="container">
-        <h1>Geeks For Geeks <br>
-            Stop Watch</h1>
+        <h1 class="card-title">Scramble:<br>B R U2 B U2 B L2 F L2 F' L2 D2 F L' U F' R2 B L U2</h1>
         <div id="time">
-            <span class="digit" id="hr">
-              00</span>
-            <span class="txt">Hr</span>
             <span class="digit" id="min">
               00</span>
-            <span class="txt">Min</span>
             <span class="digit" id="sec">
               00</span>
-            <span class="txt">Sec</span>
             <span class="digit" id="count">
               00</span>
         </div>
@@ -53,6 +47,14 @@ startBtn.addEventListener('click', function () {
     timer = true;
     stopWatch();
 });
+    
+document.onkeyup = function (e) {
+    e = e || window.event;
+    // use e.keyCode
+    if(e.keyCode == 32){
+     window.alert("Space Released!")
+    }
+};
   
 stopBtn.addEventListener('click', function () {
     timer = false;

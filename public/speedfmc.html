@@ -24,11 +24,11 @@
         <div id="time">
             <span class="digit" id="min" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
-              00</span>
+              00:</span>
             
             <span class="digit" id="sec" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
-              00</span>
+              00.</span>
             
             <span class="digit" id="mili" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
@@ -123,6 +123,7 @@ function showResult() {
   let result = parseInt(input) + minutes;
   let resultDiv = document.createElement("div");
   resultDiv.innerHTML = `Result: ${result}`;
+	resultDiv.setAttribute('class','card-title')
   document.body.appendChild(resultDiv);
 }   
 </script>
@@ -139,6 +140,7 @@ const player = new TwistyPlayer({
 
 document.body.appendChild(player);
 </script>
+	
 <!--Scramble Generating-->
 <script src="https://cdn.cubing.net/js/cubing/scramble" type="module">
 import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";

@@ -133,7 +133,7 @@ function stopWatch() {
         
         document.getElementById('min').innerHTML = minString;
         document.getElementById('sec').innerHTML = secString;
-        document.getElementById('count').innerHTML = countString.substring(0, countString.length()-1);
+        document.getElementById('count').innerHTML = countString.slice(0, -1);
         setTimeout(stopWatch, 10);
     }
 }

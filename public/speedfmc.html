@@ -14,7 +14,8 @@
 </head>
 <body>
 <div class="container">
-        <h1 class="card-title" style="font-size: 50px !important;">Scramble:<br>B R U2 B U2 B L2 F L2 F' L2 D2 F L' U F' R2 B L U2</h1>
+        <h1 class="card-title" style="font-size: 25px !important;">Scramble:</h1>
+        <h1 class="card-title" id ='scram' style="font-size: 50px !important;">B R U2 B U2 B L2 F L2 F' L2 D2 F L' U F' R2 B L U2</h1>
         <div id="timer"/>
         <div id="time">
             <span class="digit" id="min" style="font-size: 100px !important; font-weight: 600 !important;
@@ -119,7 +120,10 @@ function showResult() {
   let resultDiv = document.createElement("div");
   resultDiv.innerHTML = `Result: ${result}`;
   document.body.appendChild(resultDiv);
-}
+}   
+</script>
+    <!--Scram Image Generating-->
+<script src="https://cdn.cubing.net/js/cubing/twisty" type="module">
 const TwistyPlayer = require("https://cdn.cubing.net/js/cubing/twisty")
     
 const player = new TwistyPlayer({
@@ -130,9 +134,15 @@ const player = new TwistyPlayer({
 });
 
 document.body.appendChild(player);
-    
 </script>
+<!--Scramble Generating-->
+<script src="https://cdn.cubing.net/js/cubing/scramble" type="module">
+import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
+const scramble = await randomScrambleForEvent("333"); 
 
+document.getElementById('scram').innerHTML = scramble.toString();
+</script>
+    
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

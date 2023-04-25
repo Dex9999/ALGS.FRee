@@ -70,6 +70,23 @@ document.onkeyup = function (e) {
      document.getElementById('count').innerHTML = "00";
     }
 };
+    
+document.ontouchstart = function () {
+     timer = true;
+     stopWatch();
+};
+
+document.ontouchend = function () {
+     timer = false;
+     hour = 0;
+     minute = 0;
+     second = 0;
+     count = 0;
+     document.getElementById('hr').innerHTML = "00";
+     document.getElementById('min').innerHTML = "00";
+     document.getElementById('sec').innerHTML = "00";
+     document.getElementById('count').innerHTML = "00";
+};
   
 stopBtn.addEventListener('click', function () {
     timer = false;

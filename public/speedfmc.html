@@ -20,15 +20,11 @@
             <span class="digit" id="min" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
               00</span>
-            <span style="font-size: 100px !important; font-weight: 600 !important;
-    color: #AD91FF !important;">
-              :</span>
+            
             <span class="digit" id="sec" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
               00</span>
-            <span style="font-size: 100px !important; font-weight: 600 !important;
-    color: #AD91FF !important;">
-              .</span>
+            
             <span class="digit" id="mili" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
               00</span>
@@ -109,6 +105,16 @@ function startTimer() {
 }
 
 function stopTimer() {
+      let minutes = Math.round(timeTaken / 60);
+
+      // Prompt the user for an input and add the rounded minutes to it
+      let input = prompt("How many moves?");
+      let result = parseInt(input) + minutes;
+
+      // Record the result on the bottom of the page
+      let resultDiv = document.createElement("div");
+      resultDiv.innerHTML = `Result: ${result}`;
+      document.body.appendChild(resultDiv);
   clearInterval(timerInterval);
 }
 </script>

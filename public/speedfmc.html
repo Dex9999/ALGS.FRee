@@ -15,6 +15,7 @@
 <body>
 <div class="container">
         <h1 class="card-title" style="font-size: 50px !important;">Scramble:<br>B R U2 B U2 B L2 F L2 F' L2 D2 F L' U F' R2 B L U2</h1>
+        <div id="timer"/>
         <div id="time">
             <span class="digit" id="min" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
@@ -46,36 +47,38 @@
 let startBtn = document.getElementById('start');
 let stopBtn = document.getElementById('stop');
 let resetBtn = document.getElementById('reset');
+      
+let startTime;
+let elapsedTime = 0;
+let timerInterval;
   
 let minute = 00;
 let second = 00;
 let count = 00;
+    
+document.addEventListener("keyup", function(event) {
+  if (event.code === "Space") {
+    if (!startTime) {
+      startTimer();
+    } else {
+      stopTimer();
+    }
+  }
+});
   
+document.ontouchend = function () {
+     if (!startTime) {
+      startTimer();
+    } else {
+      stopTimer();
+    }
+};
+    
+//buttons
 startBtn.addEventListener('click', function () {
     timer = true;
     stopWatch();
 });
-    
-document.onkeyup = function (e) {
-    e = e || window.event;
-    // use e.keyCode
-    if(e.keyCode == 32){
-     timer = true;
-     stopWatch();
-    }
-    if(e.keyCode == 13){
-     timer = false;
-    }
-};
-    
-document.ontouchstart = function () {
-     timer = true;
-     stopWatch();
-};
-
-document.ontouchend = function () {
-     timer = false;
-};
   
 stopBtn.addEventListener('click', function () {
     timer = false;
@@ -90,47 +93,21 @@ resetBtn.addEventListener('click', function () {
     document.getElementById('sec').innerHTML = "00";
     document.getElementById('count').innerHTML = "00";
 });
-  
-function stopWatch() {
-    if (timer) {
-        count++;
-  
-        if (count == 100) {
-            second++;
-            count = 0;
-        }
-  
-        if (second == 60) {
-            minute++;
-            second = 0;
-        }
-  
-        if (minute == 60) {
-            //say: bruh this is just a regular fmc attempt stop it
-        }
-  
-        let minString = minute;
-        let secString = second;
-        let countString = count;
-  
-//         if (minute < 10) {
-//             minString = "0" + minString;
-//         }
-  
-//         if (second < 10) {
-//             secString = "0" + secString;
-//         }
-  
-        if (count < 10) {
-            countString = "0" + countString;
-        }
-        countString = Math.floor(countString / 10);
-        
-        document.getElementById('min').innerHTML = minString;
-        document.getElementById('sec').innerHTML = secString;
-        document.getElementById('count').innerHTML = countString;
-        setTimeout(stopWatch, 10);
-    }
+
+//actual heavy lifting lol
+function startTimer() {
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(function printTime() {
+    elapsedTime = Date.now() - startTime;
+    let minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
+    let seconds = Math.floor((elapsedTime / 1000) % 60);
+    let milliseconds = Math.floor((elapsedTime % 1000) / 10);
+    document.getElementById("timer").innerHTML = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}.${milliseconds.toString().padStart(2, "0")}`;
+  }, 10);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
 }
 </script>
 

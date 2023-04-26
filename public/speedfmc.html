@@ -16,38 +16,38 @@
     <script src="https://cdn.cubing.net/js/cubing/scramble" type="module"></script>  
 </head>
 <body>
+    <!-- flex so it works everywhere!!, make esc key reset timer, table should be new v old, headers should be stretched, scramble padding, comment section (or recon) for later! -->
     <h1 class="card-title" style="font-size: 25px !important; text-align: center;">Scramble:</h1>
 
-    <h1 class="card-title" id ='scram' style="font-size: 50px !important; text-align: center;">Generating...</h1>
+    <h1 class="card-title" id ='scram' style="font-size: 150% !important; text-align: center;">Generating...</h1>
     
     
     
-<div class="container" id="timer">
-        <div id="time" style="text-align: center;">
+<div class="container" id="timer" style="text-align: center; display: flex; justify-content:center;">
+        <div id="time" style="-khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; width: 60%; display: inline-block;">
             <span class="digit" id="min" style="font-size: 100px !important; font-weight: 600 !important;
-    color: #AD91FF !important;">
-              00:</span>
+    color: #AD91FF !important; padding-top: 0 !important; width: 49%;">
+              00:00</span>
             
-            <span class="digit" id="sec" style="font-size: 100px !important; font-weight: 600 !important;
-    color: #AD91FF !important;">
-              00</span>
+<!--             <span class="digit" id="sec" style="font-size: 100px !important; font-weight: 600 !important;
+    color: #AD91FF !important; padding-top: 0 !important; width: 49%;">00</span> -->
             
             <!-- <span class="digit" id="mili" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
               00</span> -->
         </div>
 
-        <div id="buttons" style="text-align: center;">
-            <button class="btn" id="start">
-              Start</button>
-            <button class="btn" id="stop">
-              Stop</button>
-            <button class="btn" id="reset">
-              Reset</button>
-        </div>
-</div>
 <div id="twisty-container" style="width:100%; display: flex; justify-content: center;"></div>
 <div id="times"></div>
+</div>
+  <div id="buttons" style="text-align: center;">
+            <button class="btn" id="start" style="width: 32%;">
+              Start</button>
+            <button class="btn" id="stop" style="width: 32%;">
+              Stop</button>
+            <button class="btn" id="reset" style="width: 32%;">
+              Reset</button>
+        </div>
   <!--Scram Image Generating-->
   <script type="module">
     import { TwistyPlayer } from "https://cdn.cubing.net/js/cubing/twisty";
@@ -101,6 +101,8 @@ let num = 1;
 let csvContent = "No.,Time,Comment,Scramble,Date\n";
     
 document.addEventListener("keyup", function(event) {
+    document.getElementById('min').style.color = "#AD91FF"
+    //document.getElementById('sec').style.color = "#AD91FF"
   if (event.code === "Space") {
     if (!startTime) {
       startTimer();
@@ -110,6 +112,13 @@ document.addEventListener("keyup", function(event) {
   }
 });
 
+document.addEventListener("keydown", function(event) {
+  if (event.code === "Space") {
+    document.getElementById('min').style.color = "#fce300"
+    //document.getElementById('sec').style.color = "#fce300"
+  }
+});
+  
 document.addEventListener("keyup", function(event) {
   if (event.code === "Escape") {
     resetTimer();
@@ -117,6 +126,8 @@ document.addEventListener("keyup", function(event) {
 });
   
 document.getElementById('timer').ontouchend = function () {
+  document.getElementById('min').style.color = "#fce300"
+    //document.getElementById('sec').style.color = "#fce300"
      if (!startTime) {
       startTimer();
     } else {
@@ -145,8 +156,8 @@ function startTimer() {
     let minutes = Math.floor((elapsedTime / 1000 / 60) % 60);
     let seconds = Math.floor((elapsedTime / 1000) % 60);
     let milliseconds = Math.floor((elapsedTime % 1000) / 10);
-    document.getElementById("min").innerHTML = `${minutes.toString().padStart(2, "0")}:`;
-    document.getElementById('sec').innerHTML = `${seconds.toString().padStart(2, "0")}`;
+    document.getElementById("min").innerHTML = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    //document.getElementById('sec').innerHTML = `${seconds.toString().padStart(2, "0")}`;
     // document.getElementById('mili').innerHTML = `${milliseconds.toString().padStart(2, "0")}`;
   }, 10);
 }
@@ -160,8 +171,8 @@ function resetTimer() {
   clearInterval(timerInterval);
   startTime = null;
   elapsedTime = 0;
-  document.getElementById('min').innerHTML = "00:";
-  document.getElementById('sec').innerHTML = "00";
+  document.getElementById('min').innerHTML = "00:00";
+  //document.getElementById('sec').innerHTML = "00";
   //document.getElementById('mili').innerHTML = "00";
 }
 

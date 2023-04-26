@@ -1,4 +1,4 @@
-<!-- flex so it works everywhere!! -->
+<!-- flex so it works everywhere!!, make esc key reset timer, table should be new v old, headers should be stretched, scramble padding, comment section (or recon) for later! -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,6 +107,12 @@ document.addEventListener("keyup", function(event) {
     } else {
       stopTimer();
     }
+  }
+});
+
+document.addEventListener("keyup", function(event) {
+  if (event.code === "Escape") {
+    resetTimer();
   }
 });
   

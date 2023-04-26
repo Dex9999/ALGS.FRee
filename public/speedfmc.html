@@ -1,3 +1,4 @@
+<!-- flex so it works everywhere!! -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,30 +12,32 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900&display=swap" rel="stylesheet">
     <title>IceCreamSandwch's Speed FMC Tool</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="https://cdn.cubing.net/js/cubing/twisty" type="module"></script>
+    <script src="https://cdn.cubing.net/js/cubing/scramble" type="module"></script>  
 </head>
 <body>
-    <h1 class="card-title" style="font-size: 25px !important;">Scramble:</h1>
+    <h1 class="card-title" style="font-size: 25px !important; text-align: center;">Scramble:</h1>
 
-        <h1 class="card-title" id ='scram' style="font-size: 50px !important;">B R U2 B U2 B L2 F L2 F' L2 D2 F L' U F' R2 B L U2</h1>
+    <h1 class="card-title" id ='scram' style="font-size: 50px !important; text-align: center;">Generating...</h1>
     
     
     
-<div class="container">
-        <div id="timer"/>
-        <div id="time">
+<div class="container" id="timer">
+        <div id="time" style="text-align: center;">
             <span class="digit" id="min" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
               00:</span>
             
             <span class="digit" id="sec" style="font-size: 100px !important; font-weight: 600 !important;
     color: #AD91FF !important;">
-              00.</span>
-            
-            <span class="digit" id="mili" style="font-size: 100px !important; font-weight: 600 !important;
-    color: #AD91FF !important;">
               00</span>
+            
+            <!-- <span class="digit" id="mili" style="font-size: 100px !important; font-weight: 600 !important;
+    color: #AD91FF !important;">
+              00</span> -->
         </div>
-        <div id="buttons">
+
+        <div id="buttons" style="text-align: center;">
             <button class="btn" id="start">
               Start</button>
             <button class="btn" id="stop">
@@ -42,8 +45,42 @@
             <button class="btn" id="reset">
               Reset</button>
         </div>
-    </div>
-  
+</div>
+<div id="twisty-container" style="width:100%; display: flex; justify-content: center;"></div>
+<div id="times"></div>
+  <!--Scram Image Generating-->
+  <script type="module">
+    import { TwistyPlayer } from "https://cdn.cubing.net/js/cubing/twisty";
+    import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
+
+    const player = new TwistyPlayer({
+      alg: "",
+      visualization: "2D",
+      background: "none",
+      controlPanel: "none"
+    });
+
+    document.getElementById("twisty-container").appendChild(player);
+
+    async function updateScramble() {
+      updateTable()
+      resetTimer(); // change this so the timne stays later
+      const scramble = await randomScrambleForEvent("333fm");
+      document.getElementById("scram").innerHTML = scramble.toString();
+      player.alg = scramble.toString();
+    }
+
+    document.addEventListener("keyup", function(event) {
+      if (event.code === "ArrowRight") {
+        updateScramble();
+      }
+    });
+    document.addEventListener("update",(e) => {
+      updateScramble();
+    });
+
+    updateScramble();
+  </script>
 <script>
 let startBtn = document.getElementById('start');
 let stopBtn = document.getElementById('stop');
@@ -56,6 +93,12 @@ let timerInterval;
 let minute = 00;
 let second = 00;
 let mili = 00;
+
+const event = new Event("update");
+
+let num = 1;
+// Create CSV content
+let csvContent = "No.,Time,Comment,Scramble,Date\n";
     
 document.addEventListener("keyup", function(event) {
   if (event.code === "Space") {
@@ -67,7 +110,7 @@ document.addEventListener("keyup", function(event) {
   }
 });
   
-document.getElementById('scram').ontouchend = function () {
+document.getElementById('timer').ontouchend = function () {
      if (!startTime) {
       startTimer();
     } else {
@@ -97,8 +140,8 @@ function startTimer() {
     let seconds = Math.floor((elapsedTime / 1000) % 60);
     let milliseconds = Math.floor((elapsedTime % 1000) / 10);
     document.getElementById("min").innerHTML = `${minutes.toString().padStart(2, "0")}:`;
-    document.getElementById('sec').innerHTML = `${seconds.toString().padStart(2, "0")}.`;
-    document.getElementById('mili').innerHTML = `${milliseconds.toString().padStart(2, "0")}`;
+    document.getElementById('sec').innerHTML = `${seconds.toString().padStart(2, "0")}`;
+    // document.getElementById('mili').innerHTML = `${milliseconds.toString().padStart(2, "0")}`;
   }, 10);
 }
 
@@ -112,41 +155,107 @@ function resetTimer() {
   startTime = null;
   elapsedTime = 0;
   document.getElementById('min').innerHTML = "00:";
-  document.getElementById('sec').innerHTML = "00.";
-  document.getElementById('mili').innerHTML = "00";
+  document.getElementById('sec').innerHTML = "00";
+  //document.getElementById('mili').innerHTML = "00";
 }
 
 function showResult() {
   let timeTaken = Math.round(elapsedTime / 1000); // in seconds
-  let minutes = Math.floor(timeTaken / 60);
+  let minutes = Math.round(timeTaken / 60);
   let input = prompt("How many moves?");
   let result = parseInt(input) + minutes;
-  let resultDiv = document.createElement("div");
-  resultDiv.innerHTML = `Result: ${result}`;
-	resultDiv.setAttribute('class','card-title')
-  document.body.appendChild(resultDiv);
-}   
-</script>
-    <!--Scram Image Generating-->
-<script src="https://cdn.cubing.net/js/cubing/twisty" type="module">
-const TwistyPlayer = require("https://cdn.cubing.net/js/cubing/twisty")
-    
-const player = new TwistyPlayer({
-  alg: "L2 F2 D2 F2 U' R2 B2 R2 U' F2 R F' U' L D F2 L' B' D B2",
-  visualization: "2D",
-  background: "none",
-  controlPanel: "none"
-});
+  if(result) {
+    // Update CSV content
+  csvContent += num + "," + result.toFixed(2) + ",," + document.getElementById("scram").innerText + "," + 
+  new Date().getFullYear()+'-'+
+  (parseInt(new Date().getMonth())+1)+'-'+
+  new Date().getDate()+' '+
+  new Date().getHours()+':'+
+  new Date().getMinutes()+':'+
+  new Date().getSeconds() + "\n"; //2023-04-26 2:40:30 fix this!!!!! 2023-3-26 2:39:31
+  num++;
+  
+  document.dispatchEvent(event);
+  }
+}
 
-document.body.appendChild(player);
-</script>
-	
-<!--Scramble Generating-->
-<script src="https://cdn.cubing.net/js/cubing/scramble" type="module">
-import { randomScrambleForEvent } from "https://cdn.cubing.net/js/cubing/scramble";
-const scramble = await randomScrambleForEvent("333"); 
+function downloadCSV() {
+  // Create CSV file
+  let blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
 
-document.getElementById('scram').innerHTML = scramble.toString();
+  // Create download link
+  let link = document.createElement("a");
+  let url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", "results.csv");
+  link.style.visibility = "hidden";
+
+  // Add link to the page and simulate click - :0 scary
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function updateTable() {
+  let csvData = csvContent.split("\n").map(row => row.split(","));
+  let table = document.createElement("table");
+  table.style.color = "#AD91FF"
+  table.style.margin = "auto";
+  table.style.padding = "auto";
+  table.style.height = "100vh";
+  table.style.display = "flex";
+  table.style.flexDirection = "column";
+  table.style.flexShrink = "50";
+  table.style.justifyContent = "space-between";
+
+  // Create table header
+  let thead = document.createElement("thead");
+  let headerRow = document.createElement("tr");
+  let headers = csvData[0];
+
+  for (let i = 0; i < headers.length; i++) {
+    let header = document.createElement("th");
+    header.textContent = headers[i];
+    headerRow.appendChild(header);
+  }
+
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // Create table body
+  let tbody = document.createElement("tbody");
+
+  for (let i = csvData.length - 2; i > 0; i--) { // start from end and exclude last empty row
+    let row = csvData[i];
+    let tr = document.createElement("tr");
+
+    for (let j = 0; j < row.length; j++) {
+      let td = document.createElement("td");
+      td.textContent = row[j];
+      tr.appendChild(td);
+    }
+
+    tbody.insertBefore(tr, tbody.firstChild); // insert at the beginning
+  }
+
+  table.appendChild(tbody);
+
+  // Remove existing table and add new table to the page
+  let oldTable = document.getElementById("resultsTable");
+  if (oldTable) {
+    oldTable.parentNode.removeChild(oldTable);
+  }
+
+  table.id = "resultsTable";
+  table.style.maxHeight = "300px";
+  table.style.overflowY = "scroll";
+  document.body.appendChild(table);
+}
+
+
+
+
+
 </script>
     
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

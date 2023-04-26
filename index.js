@@ -2,6 +2,10 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 
+//dotenv?!?!?? How am i missing this
+require('dotenv').config()
+console.log(process.env)
+
 //express stuff
 const express = require('express');
 const { response } = require('express');
@@ -19,6 +23,10 @@ app.use(express.static(path.join(__dirname+'/public/css')))
  */
 async function checkPageForLink(req, res) {
   const url = req.url;
+  if(url === '/speedfmc' || url === '/sfmc'){
+    const html = fs.readFileSync('public/speedfmc.html', 'utf8')
+    res.send(html);
+  }
   if (url === '/oll'||
       url === '/pll'||
       url === '/cs') {
@@ -42,10 +50,6 @@ app.get('*', checkPageForLink);
 
 app.get("/", (req, res) => {
     res.type('html').sendFile('public/index.html', {root: __dirname});
-})
-
-app.get("/speedfmc", (req, res) => {
-    res.type('html').send('public/speedfmc.html', {root: __dirname});
 })
 
 app.use(function(req, res) {

@@ -23,23 +23,19 @@
     
     
     
-<div class="container" id="timer" style="text-align: center; display: flex; justify-content:center;">
-        <div id="time" style="-khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; width: 60%; display: inline-block;">
-            <span class="digit" id="min" style="font-size: 100px !important; font-weight: 600 !important;
-    color: #AD91FF !important; padding-top: 0 !important; width: 49%;">
-              00:00</span>
-            
-<!--             <span class="digit" id="sec" style="font-size: 100px !important; font-weight: 600 !important;
-    color: #AD91FF !important; padding-top: 0 !important; width: 49%;">00</span> -->
-            
-            <!-- <span class="digit" id="mili" style="font-size: 100px !important; font-weight: 600 !important;
-    color: #AD91FF !important;">
-              00</span> -->
-        </div>
+<!-- timer and scram, oml the flexbox css and everything sucked to write, im never touching this again -->
+<div class="container" id="timer" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+  <div id="time" style="flex: 1; text-align: center;">
+    <span class="digit" id="min" style="width: 49%; font-size: 100px !important; font-weight: 600 !important; color: rgb(173, 145, 255); padding-top: 0px !important;">00:00</span>
+  </div>
 
-<div id="twisty-container" style="width:100%; display: flex; justify-content: center;"></div>
-<div id="times"></div>
+  <div id="twisty-container" style="flex: 1; text-align: center; display: flex; justify-content: center; align-items: center;">
+    <twisty-player></twisty-player>
+  </div>
+  
+  <div id="times"></div>
 </div>
+    
   <div id="buttons" style="text-align: center;">
             <button class="btn" id="start" style="width: 32%;">
               Start</button>
@@ -267,12 +263,28 @@ function updateTable() {
   table.style.maxHeight = "300px";
   table.style.overflowY = "scroll";
   document.body.appendChild(table);
+  fixTable()
+  
 }
 
+function fixTable() {
+// Get the table element
+const table = document.getElementById('resultsTable');
 
+// Get the tbody element
+const tbody = table.querySelector('tbody');
 
+// Get the array of rows in the tbody
+const rows = Array.from(tbody.rows);
 
+// Reverse the order of the rows
+rows.reverse();
 
+// Append the reversed rows back to the tbody in the new order
+rows.forEach(row => {
+  tbody.appendChild(row);
+});
+}
 </script>
     
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

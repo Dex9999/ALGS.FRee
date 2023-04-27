@@ -14,35 +14,40 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="https://cdn.cubing.net/js/cubing/twisty" type="module"></script>
     <script src="https://cdn.cubing.net/js/cubing/scramble" type="module"></script>  
+    <style>
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
 </head>
 <body>
     <!-- flex so it works everywhere!!, make esc key reset timer, table should be new v old, headers should be stretched, scramble padding, comment section (or recon) for later! -->
-    <h1 class="card-title" style="font-size: 25px !important; text-align: center;">Scramble:</h1>
+    <h1 class="card-title" style="font-size: 2.5vw !important; text-align: center;">Scramble:</h1>
 
-    <h1 class="card-title" id ='scram' style="font-size: 150% !important; text-align: center;">Generating...</h1>
+    <h1 class="card-title" id ='scram' style="width: 100vw;
+    font-size: 2.5vw !important; text-align: center;">Generating...</h1>
     
     
     
 <!-- timer and scram, oml the flexbox css and everything sucked to write, im never touching this again -->
-<div class="container" id="timer" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
+<div class="container" id="timer" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; height: 75%; padding-top: 5%;">
   <div id="time" style="flex: 1; text-align: center;">
     <span class="digit" id="min" style="width: 49%; font-size: 100px !important; font-weight: 600 !important; color: rgb(173, 145, 255); padding-top: 0px !important;">00:00</span>
   </div>
 
   <div id="twisty-container" style="flex: 1; text-align: center; display: flex; justify-content: center; align-items: center;">
   </div>
-  
-  <div id="times"></div>
 </div>
-    
-  <div id="buttons" style="text-align: center;">
-            <button class="btn" id="start" style="width: 32%;">
-              Start</button>
-            <button class="btn" id="stop" style="width: 32%;">
-              Stop</button>
-            <button class="btn" id="reset" style="width: 32%;">
-              Reset</button>
-        </div>
+<div id="buttons" style="position: fixed; bottom: 25%; width: 100%; height: 10%; display: inline-block; text-align: center;">
+<!-- start and stop buttons I didn't like but may add later if people want
+  <button class="btn" id="start" style="width: 32%;">
+    Start</button>
+  <button class="btn" id="stop" style="width: 32%;">
+    Stop</button> -->
+    <button class="btn" id="reset" style="width: 47%;">Reset</button> 
+    <button class="btn" id="download" style="width: 47%;" onclick="downloadCSV()">Download CSV</button>
+</div>
   <!--Scram Image Generating-->
   <script type="module">
     import { TwistyPlayer } from "https://cdn.cubing.net/js/cubing/twisty";
@@ -171,7 +176,8 @@ function resetTimer() {
   //document.getElementById('mili').innerHTML = "00";
 }
 
-function showResult() {
+async function showResult() {
+  document.getElementById("min").style.color = "#AD91FF";
   let timeTaken = Math.round(elapsedTime / 1000); // in seconds
   let minutes = Math.round(timeTaken / 60);
   let input = prompt("How many moves?");
@@ -211,10 +217,15 @@ function downloadCSV() {
 function updateTable() {
   let csvData = csvContent.split("\n").map(row => row.split(","));
   let table = document.createElement("table");
-  table.style.color = "#AD91FF"
+  table.style.color = "#AD91FF";
   table.style.margin = "auto";
   table.style.padding = "auto";
-  table.style.height = "100vh";
+
+  table.style.position = "fixed";
+  table.style.height = "25%";
+  table.style.bottom = "0";
+  table.style.width = "100%";
+  
   table.style.display = "flex";
   table.style.flexDirection = "column";
   table.style.flexShrink = "50";
@@ -222,12 +233,14 @@ function updateTable() {
 
   // Create table header
   let thead = document.createElement("thead");
+  thead.style.width = "100%";
   let headerRow = document.createElement("tr");
   let headers = csvData[0];
 
   for (let i = 0; i < headers.length; i++) {
     let header = document.createElement("th");
     header.textContent = headers[i];
+    header.style.width = "20%";
     headerRow.appendChild(header);
   }
 
@@ -236,6 +249,7 @@ function updateTable() {
 
   // Create table body
   let tbody = document.createElement("tbody");
+  tbody.style.width = "100%";
 
   for (let i = csvData.length - 2; i > 0; i--) { // start from end and exclude last empty row
     let row = csvData[i];
@@ -244,6 +258,7 @@ function updateTable() {
     for (let j = 0; j < row.length; j++) {
       let td = document.createElement("td");
       td.textContent = row[j];
+      td.style.width = "20%";
       tr.appendChild(td);
     }
 
@@ -262,9 +277,9 @@ function updateTable() {
   table.style.maxHeight = "300px";
   table.style.overflowY = "scroll";
   document.body.appendChild(table);
-  fixTable()
-  
+  fixTable();
 }
+
 
 function fixTable() {
 // Get the table element

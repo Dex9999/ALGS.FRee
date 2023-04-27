@@ -11,13 +11,13 @@ body {
 
 
 table, th, td {
-  border: 1px solid !important;    
+  border: 1px solid !important;
   border-color: #AD91FF !important;
-    width:'80%' !important;
+  width:'80%' !important;
   text-align: center !important;
-    margin-left: auto;
+  margin-left: auto;
   margin-right: auto;
-padding: 10px !important; 
+  padding: 10px !important;
 }
 
 #table_container {

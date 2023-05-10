@@ -37,6 +37,9 @@ async function checkPageForLink(req, res) {
     console.log(replacedHtml)
     res.send(replacedHtml);
   }
+  if (url.startsWith('s ' || url.startsWith('search ')){
+      res.send(url.baseUrl)
+  }
 }
 
 // Logging

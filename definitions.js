@@ -29,8 +29,8 @@ async function searchWca(res, event, region, type){
   var parsedType = conversions[type]
   
   var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${parsedEvent}/average?region=${region}`
-  
-  res.send(event+region+type+baseUrl)
+  console.log(event,region,type)
+  res.send(baseUrl)
  
   function capital(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

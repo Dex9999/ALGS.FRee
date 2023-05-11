@@ -24,9 +24,9 @@ export function searchWca(res, event, region, type){
   
   //type = capital(res.query.id) || 'average'
   
-  base_url = `https://www.worldcubeassociation.org/results/rankings/${event}/average?region=${region}`
+  var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${event}/average?region=${region}`
   
-  res.send(event+region+type+res+base_url)
+  res.send(event+region+type+res+baseUrl)
  
   function capital(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

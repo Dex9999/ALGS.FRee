@@ -1,6 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
+import searchWca from 'definitions.js'
 
 //dotenv?!?!?? How am i missing this
 require('dotenv').config()
@@ -37,8 +38,9 @@ async function checkPageForLink(req, res) {
     console.log(replacedHtml)
     res.send(replacedHtml);
   }
-  if (url.startsWith('/search%20') || url.startsWith('/s/') || url.startsWith('/s%20')){
-  res.send(req.url.replace(/%20/g,' ').slice(3).split(' ')+' hehe');
+  if (url.startsWith('/s/') || url.startsWith('/s%20')){
+  var request = req.url.replace(/%20/g,' ').slice(3).split(' ')
+  searchWca(res, request[0].toLowerCase(), request[1].toUpperCase(), request[2].toLowerCase())
   }
 }
 

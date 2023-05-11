@@ -1,4 +1,4 @@
-export function searchWca(req, res){
+export function searchWca(res, event, region, type){
   const conversions = {
   '3x3': '333',
   '3': '333',
@@ -22,13 +22,11 @@ export function searchWca(req, res){
   'oh':'333oh'
   };
   
-  event = 
-  region =
-  type = capital(res.query.id) || 'average'
+  //type = capital(res.query.id) || 'average'
   
   base_url = `https://www.worldcubeassociation.org/results/rankings/${event}/average?region=${region}`
   
-  res.redirect('')
+  res.send(event+region+type+res+base_url)
  
   function capital(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

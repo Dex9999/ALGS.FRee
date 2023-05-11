@@ -43,7 +43,7 @@ async function checkPageForLink(req, res) {
   if (request.length >= 3) {
     searchWca(res, request[0].toLowerCase(), request[1].toLowerCase(), request[2].toLowerCase())
   } else {
-   res.send('err: '+request+'\n Format: event (eg "clock","c","🎛️"), region (eg "canada"), type (eg "average")')
+   res.send('Format: event (eg "clock","c","🎛️"), region (eg "canada"), type (eg "average")')
   }
   }
 

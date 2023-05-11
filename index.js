@@ -38,7 +38,7 @@ async function checkPageForLink(req, res) {
     res.send(replacedHtml);
   }
   //if (url.startsWith('s%20' || url.startsWith('search '))){
-  res.send(req.url.replaceAll('%20',' ')+'hehe');
+  res.send(req.url+'hehe');
   //}
 }
 

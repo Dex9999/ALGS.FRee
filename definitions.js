@@ -22,6 +22,8 @@ async function searchWca(res, event, region, type){
   'oh':'333oh',
   'a':'average',
   's':'single',
+  'avg':'average',
+  'sin':'single',
   'pyra':'pyram'
   };
   
@@ -29,7 +31,7 @@ async function searchWca(res, event, region, type){
   var parsedEvent = conversions[event]
   var parsedType = conversions[type]
   
-  var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${parsedEvent}/average?region=${region}`
+  var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${parsedEvent}/average?region=${capital(region)}`
   console.log(event,region,type)
   res.redirect(baseUrl)
  

@@ -287,8 +287,8 @@ async function searchWca(res, event, region, type){
     "XO": "_Oceania",
     "XS": "_South America",
     "XW": "world",
-    "world": "world",
-    "all": "world"
+    "WORLD": "world",
+    "ALL": "world"
 }
   return countries[iso2];
   }
@@ -296,7 +296,7 @@ async function searchWca(res, event, region, type){
   //type = capital(res.query.id) || 'average'
   var parsedEvent = conversions[event]
   var parsedType = conversions[type]
-  var parsedRegion = getCountryName(region)
+  var parsedRegion = getCountryName(region.toUpperCase())
   
   var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${parsedEvent}/average?region=${parsedRegion}`
   console.log(event,region,type)

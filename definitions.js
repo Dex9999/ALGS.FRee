@@ -21,7 +21,8 @@ async function searchWca(res, event, region, type){
   '5bld':'555bf',
   'oh':'333oh',
   'a':'average',
-  's':'single'
+  's':'single',
+  'pyra':'pyram'
   };
   
   //type = capital(res.query.id) || 'average'

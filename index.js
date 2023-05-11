@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');
 var path = require('path');
-const searchWca = require('./definitions.js')
+const { searchWca } = require('./definitions.js')
 
 //dotenv?!?!?? How am i missing this
 require('dotenv').config()

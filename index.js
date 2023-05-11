@@ -41,7 +41,7 @@ async function checkPageForLink(req, res) {
   if (url.startsWith('/s/') || url.startsWith('/s%20')){
   var request = req.url.replace(/%20/g,' ').slice(3).split(' ')
   if (request.length >= 3) {
-    searchWca(res, request[0].toLowerCase(), request[1].toUpperCase(), request[2].toLowerCase())
+    searchWca(res, request[0].toLowerCase(), request[1].toLowerCase(), request[2].toLowerCase())
   } else {
    res.send('err: '+request)
   }

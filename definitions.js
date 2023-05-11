@@ -296,8 +296,9 @@ async function searchWca(res, event, region, type){
   //type = capital(res.query.id) || 'average'
   var parsedEvent = conversions[event]
   var parsedType = conversions[type]
+  var parsedRegion = getCountryName(region)
   
-  var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${parsedEvent}/average?region=${capital(region)}`
+  var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${parsedEvent}/average?region=${parsedRegion}`
   console.log(event,region,type)
   res.redirect(baseUrl)
  

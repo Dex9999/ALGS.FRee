@@ -1,4 +1,4 @@
-export function searchWca(res, event, region, type){
+async function searchWca(res, event, region, type){
   const conversions = {
   '3x3': '333',
   '3': '333',
@@ -32,3 +32,5 @@ export function searchWca(res, event, region, type){
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 }
+
+module.exports = { searchWca };

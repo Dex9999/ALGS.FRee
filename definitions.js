@@ -19,14 +19,18 @@ async function searchWca(res, event, region, type){
   '3bld':'333bf',
   '4bld':'444bf',
   '5bld':'555bf',
-  'oh':'333oh'
+  'oh':'333oh',
+  'a':'average',
+  's':'single'
   };
   
   //type = capital(res.query.id) || 'average'
+  var parsedEvent = conversions[event]
+  var parsedType = conversions[type]
   
-  var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${event}/average?region=${region}`
+  var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${parsedEvent}/average?region=${region}`
   
-  res.send(event+region+type+res+baseUrl)
+  res.send(event+region+type+baseUrl)
  
   function capital(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);

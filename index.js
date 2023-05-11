@@ -37,7 +37,7 @@ async function checkPageForLink(req, res) {
     console.log(replacedHtml)
     res.send(replacedHtml);
   }
-  if (url.startsWith('/s%20') || url.startsWith('/s/') || url.startsWith('/search%20')){
+  if (url.startsWith('/search%20') || url.startsWith('/s/') || url.startsWith('/s%20')){
   res.send(req.url.replace(/%20/g,' ').slice(3).split(' ')+' hehe');
   }
 }

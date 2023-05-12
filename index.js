@@ -94,13 +94,10 @@ async function fetchFromMongoDB(set){
 }
 
 async function getUpcomingCompetitions(res, req){
-  try{
   global.btoa = (str) => {
     return Buffer.from(str).toString('base64');
   };
-  } catch (e) {
-    console.log(e)
-  }
+  
   const puppeteer = require('puppeteer');
   let options = {}
   if(process.env.AWS_LAMBA_FUNCTION_VERSION){
@@ -112,56 +109,36 @@ async function getUpcomingCompetitions(res, req){
       ignoreHTTPSErrors: true
     };
   }
-
-  (async () => {
-  const browser = await puppeteer.launch({
-     headless: 'new', slowMo: 100, // Uncomment to visualize test
-  });
-  const page = await browser.newPage();
-
-  // Load "https://statistics.worldcubeassociation.org/"
-  await page.goto('https://statistics.worldcubeassociation.org/');
-
-  // Resize window to 1344 x 959
-  await page.setViewport({ width: 1344, height: 959 });
-
-  // Click on <span> " Login"
-  await page.waitForSelector('#login');
-  await Promise.all([
-    page.click('#login'),
-    page.waitForNavigation()
-  ]);
-
-
-  // Fill "1olearydec@hdsb... on <input> #user_login
-  await page.waitForSelector('#user_login:not([disabled])');
-  await page.type('#user_login', "1olearydec@hdsb.ca");
-
-  // Press Tab on input
-  await page.waitForSelector('#user_login');
-  await page.keyboard.press('Tab');
-
-  // Fill "pword!" on <input> #user_password
-  await page.waitForSelector('#user_password:not([disabled])');
-  await page.type('#user_password', process.env.PASS);
-
-  // Press Enter on input
-  await page.waitForSelector('#user_password');
-  await Promise.all([
-    page.keyboard.press('Enter'),
-    page.waitForNavigation()
-  ]);
-
-  const localStorage = await page.evaluate(() => {
-    return JSON.stringify(window.localStorage);
-  });
   
-  // console.log(localStorage.token);
-  const obj = JSON.parse(localStorage);
-  const { token } = obj;
-  res.send(token)
-  console.log("sent token")
+  (async () => {
+    const browser = await puppeteer.launch({
+      headless: 'new',
+      args: ['--no-sandbox']
+    });
+  
+    const page = await browser.newPage();
+    try {
+      await page.goto('https://www.worldcubeassociation.org/oauth/authorize?client_id=OhWPipjYJcvFnp_1bMAWxBHyOaLm9Q1GP6C3OaPfHoY&redirect_uri=https://statistics.worldcubeassociation.org&response_type=token&scope=public');
+  
+      await page.type('#user_login', '1olearydec@hdsb.ca');
+      page.keyboard.press('Tab');
+  
+      await page.type('#user_password', process.env.PASS);
+      page.keyboard.press('Enter');
+  
+      await page.waitForNavigation({ timeout: 30000 });
+      const token = await page.evaluate(() => {
+        return window.localStorage.getItem('token');
+      });
+      console.log(`Token: ${token}`);
+      res.send(token);
+  
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    } finally {
+      await browser.close();
+    }
+  })();
+  
 
-  await browser.close();
-})();
 }

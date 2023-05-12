@@ -46,6 +46,9 @@ async function checkPageForLink(req, res) {
    res.send('Format: event (eg "clock","c","clk"), region (eg "canada"), type (eg "average")')
   }
   }
+  if (url === '/api'){
+    getUpcomingCompetitions(res, req);
+  }
 
 }
 
@@ -78,4 +81,66 @@ async function fetchFromMongoDB(set){
 
   const Case = require('./cubeSchema.js');
   return await Case.find({},{'_id':0});
+}
+
+async function getUpcomingCompetitions(res, req){
+  try{
+  global.btoa = (str) => {
+    return Buffer.from(str).toString('base64');
+  };
+  } catch (e) {
+    console.log(e)
+  }
+  const puppeteer = require('puppeteer');
+(async () => {
+  const browser = await puppeteer.launch({
+     headless: 'new', slowMo: 100, // Uncomment to visualize test
+  });
+  const page = await browser.newPage();
+
+  // Load "https://statistics.worldcubeassociation.org/"
+  await page.goto('https://statistics.worldcubeassociation.org/');
+
+  // Resize window to 1344 x 959
+  await page.setViewport({ width: 1344, height: 959 });
+
+  // Click on <span> " Login"
+  await page.waitForSelector('#login');
+  await Promise.all([
+    page.click('#login'),
+    page.waitForNavigation()
+  ]);
+
+
+  // Fill "1olearydec@hdsb... on <input> #user_login
+  await page.waitForSelector('#user_login:not([disabled])');
+  await page.type('#user_login', "1olearydec@hdsb.ca");
+
+  // Press Tab on input
+  await page.waitForSelector('#user_login');
+  await page.keyboard.press('Tab');
+
+  // Fill "pword!" on <input> #user_password
+  await page.waitForSelector('#user_password:not([disabled])');
+  await page.type('#user_password', "pword!");
+
+  // Press Enter on input
+  await page.waitForSelector('#user_password');
+  await Promise.all([
+    page.keyboard.press('Enter'),
+    page.waitForNavigation()
+  ]);
+
+  const localStorage = await page.evaluate(() => {
+    return JSON.stringify(window.localStorage);
+  });
+  
+  // console.log(localStorage.token);
+  const obj = JSON.parse(localStorage);
+  const { token } = obj;
+  res.send(token)
+  console.log("sent token")
+
+  await browser.close();
+})();
 }

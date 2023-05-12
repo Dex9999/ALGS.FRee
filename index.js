@@ -3,6 +3,16 @@ var fs = require('fs');
 var path = require('path');
 const { searchWca } = require('./definitions.js')
 
+//puppeteer stuff
+let chrome = {};
+let puppeteer;
+if(process.env.AWS_LAMBA_FUNCTION_VERSION){
+  chrome = require('chrome-aws-lambda');
+  puppeteer = require('puppeteer-core');
+} else {
+  puppeteer = require('puppeteer');
+}
+
 //dotenv?!?!?? How am i missing this
 require('dotenv').config()
 console.log(process.env)
@@ -49,7 +59,7 @@ async function checkPageForLink(req, res) {
   if (url === '/api'){
     getUpcomingCompetitions(res, req);
   }
-
+  return
 }
 
 // Logging
@@ -92,7 +102,18 @@ async function getUpcomingCompetitions(res, req){
     console.log(e)
   }
   const puppeteer = require('puppeteer');
-(async () => {
+  let options = {}
+  if(process.env.AWS_LAMBA_FUNCTION_VERSION){
+    options = {
+      args: [...chrome.args, "--hide-scrollbars", "disable-web-security"],
+      defaultViewport: chrome.defaultViewport,
+      executablePath: await chrome.executablePath,
+      headless: 'new',
+      ignoreHTTPSErrors: true
+    };
+  }
+
+  (async () => {
   const browser = await puppeteer.launch({
      headless: 'new', slowMo: 100, // Uncomment to visualize test
   });
@@ -122,7 +143,7 @@ async function getUpcomingCompetitions(res, req){
 
   // Fill "pword!" on <input> #user_password
   await page.waitForSelector('#user_password:not([disabled])');
-  await page.type('#user_password', "pword!");
+  await page.type('#user_password', process.env.PASS);
 
   // Press Enter on input
   await page.waitForSelector('#user_password');

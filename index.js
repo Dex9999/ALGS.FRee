@@ -111,10 +111,7 @@ async function getUpcomingCompetitions(res, req){
   }
   
   (async () => {
-    const browser = await puppeteer.launch({
-      headless: 'new',
-      args: ['--no-sandbox']
-    });
+    const browser = await puppeteer.launch(options);
   
     const page = await browser.newPage();
     try {

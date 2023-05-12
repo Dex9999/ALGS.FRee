@@ -4,7 +4,7 @@
   "description": "Amazing website for ranking and displaying algs",
   "main": "index.js",
   "engines": {
-    "node": "14.x"
+    "node": "^14"
   },
   "scripts": {
     "start": "node app.js",
@@ -28,8 +28,11 @@
     "mongoose": "^7.0.3",
     "new-line": "^1.1.1",
     "nodemon": "^2.0.22",
-    "puppeteer": "^20.2.0",
+    "puppeteer-core": "^6",
     "sr-puzzlegen": "^1.0.4"
+  },
+  "devDependencies": {
+    "puppeteer": "^10.4.0"
   },
   "nodemonConfig": {
     "ext": "js,json,hbs,html,css"

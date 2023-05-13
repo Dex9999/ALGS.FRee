@@ -6,7 +6,7 @@ const { searchWca } = require('./definitions.js')
 //puppeteer stuff
 let chrome = {};
 let puppeteer;
-if(process.env.AWS_LAMBA_FUNCTION_VERSION){
+if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
   chrome = require('chrome-aws-lambda');
   puppeteer = require('puppeteer-core');
 } else {
@@ -97,12 +97,11 @@ async function getUpcomingCompetitions(res, req){
   global.btoa = (str) => {
     return Buffer.from(str).toString('base64');
   };
-  
-  const puppeteer = require('puppeteer');
   let options = {}
-  if(process.env.AWS_LAMBA_FUNCTION_VERSION){
+
+  if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
     options = {
-      args: [...chrome.args, "--hide-scrollbars", "disable-web-security"],
+      args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
       defaultViewport: chrome.defaultViewport,
       executablePath: await chrome.executablePath,
       headless: 'new',

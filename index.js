@@ -94,6 +94,9 @@ async function fetchFromMongoDB(set){
 }
 
 async function getUpcomingCompetitions(res, req){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  
   global.btoa = (str) => {
     return Buffer.from(str).toString('base64');
   };

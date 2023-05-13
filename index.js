@@ -59,6 +59,9 @@ async function checkPageForLink(req, res) {
   if (url === '/api'){
     getUpcomingCompetitions(res, req);
   }
+  if(url.startsWith('/drive')){
+    getTimeToDrive(res, req);
+  }
   return
 }
 
@@ -138,6 +141,96 @@ async function getUpcomingCompetitions(res, req){
       await browser.close();
     }
   })();
+  
+
+}
+
+async function getTimeToDrive(res, req){
+
+  // res.send(req.query.home+req.query.location)
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  
+  global.btoa = (str) => {
+    return Buffer.from(str).toString('base64');
+  };
+  let options = {}
+
+  if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
+    options = {
+      args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chrome.defaultViewport,
+      executablePath: await chrome.executablePath,
+      headless: 'new',
+      ignoreHTTPSErrors: true
+    };
+  }
+  
+  const puppeteer = require('puppeteer');
+(async () => {
+  const browser = await puppeteer.launch(options);
+  const page = await browser.newPage();
+
+  // Load "https://www.google.com/maps/@43.3984736,-79.7933568,14z"
+  await page.goto('https://www.google.com/maps/@43.3984736,-79.7933568,14z');
+
+  // Resize window to 1920 x 969
+  await page.setViewport({ width: 1920, height: 969 });
+
+  // Click on <button> #hArJGc
+  await page.waitForSelector('#hArJGc');
+  await Promise.all([
+    page.click('#hArJGc'),
+    page.waitForNavigation()
+  ]);
+
+  // Fill "5176 Fernbrook ... on <input> [placeholder="Choose starting point, or click on the map..."]
+  await page.waitForSelector('[placeholder="Choose starting point, or click on the map..."]:not([disabled])');
+  await page.type('[placeholder="Choose starting point, or click on the map..."]', req.query.home);
+
+  // Press Tab on input
+  await page.waitForSelector('[placeholder="Choose starting point, or click on the map..."]');
+  await page.keyboard.press('Tab');
+
+  // Press Tab on button
+  await page.waitForSelector('.fC7rrc:nth-child(1) [aria-label="Search"]');
+  await page.keyboard.press('Tab');
+
+  // Fill "ApplebyCollege" on <input> [placeholder="Choose destination, or click on the map..."]
+  await page.waitForSelector('[placeholder="Choose destination, or click on the map..."]:not([disabled])');
+  await page.type('[placeholder="Choose destination, or click on the map..."]', req.query.location);
+
+  // Press Enter on input
+  await page.waitForSelector('[placeholder="Choose destination, or click on the map..."]');
+  await page.keyboard.press('Enter');
+
+  // Click on <div> "17 min 12.5 km via Burloa..."
+  await page.waitForSelector('#section-directions-trip-0');
+  await Promise.all([
+    page.click('#section-directions-trip-0'),
+    page.waitForNavigation()
+  ]);
+
+  // Click on <div> "17 min (12.5 km) via Burl..."
+  await page.waitForSelector('.PNEhTd');
+  await page.click('.PNEhTd');
+
+  // Click on <span> "17 min (12.5 km)"
+  await page.waitForSelector('.yIkJof > span');
+  await page.click('.yIkJof > span');
+
+  // Click on <span> "17 min"
+  await page.waitForSelector('span > .delay-light');
+  await page.click('span > .delay-light');
+
+  const spanVal =  await page.$eval('span > .delay-light', el => el.innerText);
+  console.log(spanVal); // test
+
+  const oui =  await page.$eval('.PNEhTd', el => el.innerText);
+  res.send(oui.slice(0,-74));
+
+  await browser.close();
+})();
   
 
 }

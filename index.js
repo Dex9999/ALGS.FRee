@@ -2,6 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 const { searchWca } = require('./definitions.js')
+var fetch = require('node-fetch');
+var cheerio = require('cheerio');
 
 //puppeteer stuff
 let chrome = {};
@@ -21,7 +23,7 @@ console.log(process.env)
 const express = require('express');
 const { response } = require('express');
 const app = express()
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.use(express.static(path.join(__dirname+'/public')))
 app.use(express.static(path.join(__dirname+'/api')))
@@ -146,53 +148,51 @@ async function getUpcomingCompetitions(res, req){
 }
 
 async function getTimeToDrive(res, req){
-
-  // res.send(req.query.home+req.query.location)
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  var to = req.query.to ? req.query.to.replace("%20", '+') : "Appleby+College,+Lakeshore+Road+West,+Oakville,+ON";
+  console.log(req.query.to);
+  var from = req.query.from ? req.query.from.replace("%20", '+') : "5176+Fernbrook+Court,+Burlington,+ON";
+  console.log(from);
+  let url = "https://www.google.com/maps/dir/"+from+"/"+to
   
-  global.btoa = (str) => {
-    return Buffer.from(str).toString('base64');
-  };
-  let options = {}
-
-  if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
-    options = {
-      args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
-      defaultViewport: chrome.defaultViewport,
-      executablePath: await chrome.executablePath,
-      headless: 'new',
-      ignoreHTTPSErrors: true
-    };
+  
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+  
+    const searchText = from.replace(/\+/g, ' ');
+    const minText = "min";
+    const targetChar = '"';
+    const kmText = " km";
+  
+    const splitIndex = html.indexOf(searchText);
+    const endIndex = html.indexOf(minText, splitIndex + searchText.length);
+  
+    if (splitIndex !== -1 && endIndex !== -1) {
+      const splitText = html.substring(splitIndex, endIndex + minText.length);
+      const endInd = splitText.lastIndexOf(targetChar);
+  
+      if (endInd !== -1) {
+        const backwardText = splitText.substring(endInd + 1);
+        const kmIndex = splitText.lastIndexOf(kmText);
+        const kmTextCutoff = (kmIndex !== -1 ? splitText.substring(kmIndex - 5, kmIndex) : "unknown").replace(/["\\]/g, '');
+  
+        console.log(backwardText);
+        console.log(kmTextCutoff);
+        
+        // Extract full addresses from the request HTML
+      const addresses = html.match(/"([^"]+)"/g).map(address => address.replace(/"/g, ""));
+        res.send(`[${backwardText} to drive ${kmTextCutoff} km](${url})\n\nFull Addresses:\n${addresses.join("\n")}`);
+      } else {
+        console.log('Target character not found.');
+      }
+    } else {
+      res.status(404).json({ error: 'Search text or "min" not found in HTML' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred' });
   }
   
-  const puppeteer = require('puppeteer');
-(async () => {
-  const browser = await puppeteer.launch(options);
-  const page = await browser.newPage();
-
-  await page.goto('https://www.google.com/maps/dir/');
-
-  await page.waitForNavigation()
-
-  await page.type('[placeholder="Choose starting point, or click on the map..."]', req.query.home);
-
-  await page.keyboard.press('Tab');
-
-  await page.keyboard.press('Tab');
-
-  await page.type('[placeholder="Choose destination, or click on the map..."]', req.query.location);
-
-  await page.keyboard.press('Enter');
-
-  await page.waitForSelector('#section-directions-trip-0');
-  const oui =  await page.$eval('#section-directions-trip-0', el => el.innerText);
-  let rah = oui.split(" ")
-  console.log(rah[0]);
-  res.send(rah[0]+" "+rah[1]+" "+rah[2].slice(0,-4));
-
-  await browser.close();
-})();
   
 
 }

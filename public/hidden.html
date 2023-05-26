@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WCA Upcoming Comps</title>
+    <link rel="stylesheet" href="css/upcoming.css">
+    <meta content="Person Hidden Stats Finder by IceCreamSandwch" property="og:title" />
+    <meta content="Tool For Finding Someone's Upcoming Competitions" property="og:description" />
+    <meta content="https://algs.vercel.app/upcoming" property="og:url" />
+    <meta content="http://s3.amazonaws.com/gt7sp-prod/decal/28/45/37/4612329307908374528_1.png" property="og:image" />
+    <meta content="#a439d1" data-react-helmet="true" name="theme-color" />
+  </head>
+  <body>
+    <div class="container">
+        <!-- <label for="wcaIdInput">Enter WCA ID:</label> -->
+        <!-- make it autofocus -->
+        <input type="text" id="wcaIdInput" name="wcaIdInput" placeholder="WCA ID" autofocus>
+        <button id="submitBtn">Submit</button>
+      </div>
+    <div id="loading" style="display: none;">
+        <div class="loader"></div>
+    </div>
+    <div id="error" class="error"></div>
+    <div id="tableContainer" style="display: flex;flex-direction: row;"></div>
+    <script src="js/hidden.js"></script>
+  </body>
+</html>

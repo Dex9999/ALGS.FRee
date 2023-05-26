@@ -80,6 +80,13 @@ app.get("/", (req, res) => {
     res.type('html').sendFile('public/index.html', {root: __dirname});
 })
 
+app.get("/upcoming", (req, res) => {
+    res.type('html').sendFile('public/upcoming.html', {root: __dirname});
+})
+app.get("/up", (req, res) => {
+    res.type('html').sendFile('public/upcoming.html', {root: __dirname});
+})
+
 app.use(function(req, res) {
     res.status(404).sendFile('public/404.html', {root: __dirname});
   });

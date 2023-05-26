@@ -64,6 +64,9 @@ async function checkPageForLink(req, res) {
   if (url === '/upcoming' || url === '/up') {
     res.type('html').sendFile('public/upcoming.html', { root: __dirname });
   }
+  if (url === '/hidden' || url === '/person_stats') {
+    res.type('html').sendFile('public/upcoming.html', { root: __dirname });
+  }
   return;
 }
 

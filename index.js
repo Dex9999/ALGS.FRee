@@ -64,6 +64,9 @@ async function checkPageForLink(req, res) {
   if(url.startsWith('/drive')){
     getTimeToDrive(res, req);
   }
+  if(url === '/upcoming' || url ==== '/up') {
+        res.type('html').sendFile('public/upcoming.html', {root: __dirname});
+  }
   return
 }
 
@@ -78,13 +81,6 @@ app.get('*', checkPageForLink);
 
 app.get("/", (req, res) => {
     res.type('html').sendFile('public/index.html', {root: __dirname});
-})
-
-app.get("/upcoming", (req, res) => {
-    res.type('html').sendFile('public/upcoming.html', {root: __dirname});
-})
-app.get("/up", (req, res) => {
-    res.type('html').sendFile('public/upcoming.html', {root: __dirname});
 })
 
 app.use(function(req, res) {

@@ -9,6 +9,7 @@ body {
     font-family: Arial, sans-serif;
     align-content: center;
     flex-direction: column;
+    color: #ffffff;
 }
 
   .container {
@@ -50,6 +51,20 @@ body {
     background-color: #7a1a9d;
     box-shadow: 1px 1px 4px -1px #ffffff;
   }
+
+  #error {
+    display: none;
+    color: #ffffff;
+    background-color: rgba(255, 77, 79, 0.2);
+    border: 2px inset rgba(255, 77, 79, 1);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  
 
 /* loading thing */
 .loader {

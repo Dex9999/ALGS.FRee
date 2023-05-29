@@ -26,6 +26,9 @@
   <div id="error" class="error"></div>
   <div id="tableContainer"></div>
   <script>
+    const style = document.createElement('stylesheet')
+    style.src = 'css/upcoming.css';
+    document.head.appendChild(style);
     const currentUrl = window.location.pathname;
 
     if (currentUrl.includes('/hidden')) {

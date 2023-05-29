@@ -25,6 +25,20 @@
   </div>
   <div id="error" class="error"></div>
   <div id="tableContainer"></div>
-  <script src="js/upcoming.js"></script>
+  <script>
+    const currentUrl = window.location.pathname;
+
+    if (currentUrl.includes('/hidden')) {
+      const script = document.createElement('script');
+      script.src = 'js/hidden.js';
+      document.head.appendChild(script);
+    }
+
+    if (currentUrl.includes('/upcoming')) {
+      const script = document.createElement('script');
+      script.src = 'js/upcoming.js';
+      document.head.appendChild(script);
+    }
+  </script>
 </body>
 </html>

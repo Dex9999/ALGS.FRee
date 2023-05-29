@@ -27,6 +27,7 @@ const port = process.env.PORT || 5000;
 app.use(express.static(path.join(__dirname + '/public')));
 app.use(express.static(path.join(__dirname + '/api')));
 app.use(express.static(path.join(__dirname + '/public/css')));
+app.use(express.static(path.join(__dirname + '/public/css/')));
 
 /**
  * This function checks every page requested for the link to be '/oll' and if so sends an html after replacing the text "setJson" with 'oll'

@@ -11,26 +11,22 @@ body {
     flex-direction: column;
     color: #ffffff;
 }
-
   .container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-
 #tableContainer {
     display: flex;
 /*     flex-direction: column;
     align-items: center; */
   }
-
   label {
     color: #ffffff;
     font-size: 24px;
     margin-bottom: 10px;
     font-weight: bold;
   }
-
   input[type="text"] {
     /* center text in box */
     text-align: center;
@@ -41,7 +37,6 @@ body {
     color: black;
     font-size: 18px;
   }
-
   button {
     margin: 20px 0;
     padding: 12px 24px;
@@ -52,12 +47,10 @@ body {
     cursor: pointer;
     font-size: 16px;
   }
-
   button:hover {
     background-color: #7a1a9d;
     box-shadow: 1px 1px 4px -1px #ffffff;
   }
-
   #error {
     display: none;
     color: #ffffff;
@@ -69,9 +62,6 @@ body {
     text-align: center;
     font-weight: bold;
   }
-  
-  
-
 /* loading thing */
 .loader {
     border: 8px solid #f3f3f3; /* Light gray */
@@ -82,12 +72,10 @@ body {
     animation: spin 2s linear infinite;
     margin: 20px auto;
   }
-  
-  @keyframes spin {
+@keyframes spin {  /*look here*/
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
-
+ }
 .dropdown {
   position: relative;
   display: inline-block;
@@ -143,8 +131,6 @@ body {
 .dropdown-accent {
   color: #a439d1;
 }
-
-/* Update input styles */
 #wcaIdInput {
   padding: 10px;
   border: none;

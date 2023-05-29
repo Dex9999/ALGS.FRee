@@ -18,6 +18,12 @@ body {
     align-items: center;
   }
 
+#tableContainer {
+    display: flex;
+/*     flex-direction: column;
+    align-items: center; */
+  }
+
   label {
     color: #ffffff;
     font-size: 24px;

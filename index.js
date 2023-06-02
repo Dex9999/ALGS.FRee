@@ -68,6 +68,9 @@ async function checkPageForLink(req, res) {
   if (url === '/hidden' || url === '/person_stats') {
     res.type('html').sendFile('public/upcoming.html', { root: __dirname });
   }
+  if (url === '/cook') {
+    res.send(`Who... are you? \nYou know. You all know exactly who I am. Say my name. \nDo what? I don't... I don't have a damn clue who... you are.\nYeah, you do. I'm the cook. I'm the man who [got employed by] Gus Fring.`)
+  }
   return;
 }
 

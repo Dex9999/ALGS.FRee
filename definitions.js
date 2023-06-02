@@ -396,8 +396,11 @@ async function searchWca(event, region, type) {
 
     var baseUrl = `https://www.worldcubeassociation.org/results/rankings/${parsedEvent}/${parsedType}?region=${parsedRegion}`
     // console.log(event,region,type)
+    if(baseUrl=='https://www.worldcubeassociation.org/results/rankings/333/average?region=world'){
+        return baseUrl.replace('www','error')
+    } else {
     return baseUrl
-
+    }
 }
 
 module.exports = { searchWca };

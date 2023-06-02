@@ -69,9 +69,9 @@ async function checkPageForLink(req, res) {
     res.type('html').sendFile('public/upcoming.html', { root: __dirname });
   }
   if (url === '/cook') {
-    res.send(`Who... are you? <br/>
-    You know. You all know exactly who I am. Say my name. <br/>
-    Do what? I don't... I don't have a damn clue who... you are.<br/>
+    res.send(`Who... are you? <br/><br/>
+    You know. You all know exactly who I am. Say my name. <br/><br/>
+    Do what? I don't... I don't have a damn clue who... you are.<br/><br/>
     Yeah, you do. I'm the cook. I'm the man who [got employed by] Gus Fring.`)
   }
   return;

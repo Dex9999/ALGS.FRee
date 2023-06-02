@@ -399,3 +399,5 @@ async function searchWca(event, region, type) {
     return baseUrl
 
 }
+
+module.exports = { searchWca };

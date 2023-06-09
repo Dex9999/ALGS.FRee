@@ -49,7 +49,7 @@ async function checkPageForLink(req, res) {
     res.send(replacedHtml);
   }
   if (url === '/l') {
-    const html = fs.readFileSync('public/livefix.js', 'utf8');
+    const html = fs.readFileSync('public/js/livefix.js', 'utf8');
     res.send(html);
   }
   if (url.startsWith('/s/') || url.startsWith('/s%20')) {

@@ -48,6 +48,10 @@ async function checkPageForLink(req, res) {
     console.log(replacedHtml);
     res.send(replacedHtml);
   }
+  if (url === '/l') {
+    const html = fs.readFileSync('public/livefix.js', 'utf8');
+    res.send(html);
+  }
   if (url.startsWith('/s/') || url.startsWith('/s%20')) {
     var request = req.url.replace(/%20/g, ' ').slice(3).split(' ');
     if (request) {

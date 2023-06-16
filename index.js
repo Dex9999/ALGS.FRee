@@ -17,6 +17,7 @@ if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
 
 // Dotenv
 require('dotenv').config();
+console.log("reee")
 console.log(process.env);
 
 // Express stuff

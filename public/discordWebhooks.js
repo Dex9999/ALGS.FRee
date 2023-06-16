@@ -1,3 +1,5 @@
+var fetch = require('node-fetch');
+
 async function sendMessage() {
   const query = `query {
   recentRecords{ 

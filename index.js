@@ -3,7 +3,7 @@ var fs = require('fs');
 var path = require('path');
 const { searchWca } = require('./definitions.js');
 var fetch = require('node-fetch');
-var cheerio = require('cheerio');
+var cheerio = require('cheerio'); 
 
 // Puppeteer stuff
 let chrome = {};

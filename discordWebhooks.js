@@ -1,6 +1,6 @@
 async function sendMessage() {
   const query = `query {
-  recentRecords{
+  recentRecords{ 
     attemptResult
     id
     result{

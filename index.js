@@ -110,10 +110,12 @@ app.use(function (req, res) {
   res.status(404).sendFile('public/404.html', { root: __dirname });
 });
 
+setInterval(sendMessage, 60000);
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
 async function sendMessage() {
   const webhookURL = 'https://discord.com/api/webhooks/1119265675366645790/RiMtxwxVvyAnsjx9cT8fz0WWrPvcCWG_wuazzJ6XNT916EGH9pX02k7-3g4oP_HBKcsS';
-  const message = 'Hello world!'; // Replace with your desired message
+  await fetch(https://live.worldcubeassociation.org/api/graphql)
   
   try {
     await fetch(webhookURL, {
@@ -121,7 +123,7 @@ async function sendMessage() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ content: message }),
+      body: JSON.stringify({ content: "test" }),
     });
     console.log('Message sent successfully!');
   } catch (error) {
@@ -129,11 +131,8 @@ async function sendMessage() {
   }
 }
 
-// Send an initial message
-sendMessage();
 
-// Schedule sending messages every minute
-setInterval(sendMessage, 60000);
+
 async function fetchFromMongoDB(set) {
   // Mongoose stuff
   const mongoose = require('mongoose');

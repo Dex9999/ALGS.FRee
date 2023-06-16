@@ -111,7 +111,29 @@ app.use(function (req, res) {
 });
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
+async function sendMessage() {
+  const webhookURL = 'https://discord.com/api/webhooks/1119265675366645790/RiMtxwxVvyAnsjx9cT8fz0WWrPvcCWG_wuazzJ6XNT916EGH9pX02k7-3g4oP_HBKcsS';
+  const message = 'Hello world!'; // Replace with your desired message
+  
+  try {
+    await fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content: message }),
+    });
+    console.log('Message sent successfully!');
+  } catch (error) {
+    console.error('Error sending message:', error);
+  }
+}
 
+// Send an initial message
+sendMessage();
+
+// Schedule sending messages every minute
+setInterval(sendMessage, 60000);
 async function fetchFromMongoDB(set) {
   // Mongoose stuff
   const mongoose = require('mongoose');

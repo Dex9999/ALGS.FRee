@@ -2,6 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 const { searchWca } = require('./definitions.js');
+const { sendMessage } = require('./public/discordWebhooks.js');
+
 var fetch = require('node-fetch');
 var cheerio = require('cheerio'); 
 
@@ -17,7 +19,6 @@ if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
 
 // Dotenv
 require('dotenv').config();
-console.log("reee")
 console.log(process.env);
 
 // Express stuff
@@ -90,6 +91,10 @@ async function checkPageForLink(req, res) {
     You know. You all know exactly who I am. Say my name. <br/><br/>
     Do what? I don't... I don't have a damn clue who... you are.<br/><br/>
     Yeah, you do. I'm the cook. I'm the man who [got employed by] Gus Fring.`)
+  }
+  if (url === '/updateWebhooksForNewStuff') {
+    await sendMessage()
+    res.send(`updated!`)
   }
   return;
 }

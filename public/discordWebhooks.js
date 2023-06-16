@@ -48,18 +48,7 @@ async function sendMessage() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ content: {
-  "embeds": [
-    {
-      "title": "Meow!",
-      "color": 1127128
-    },
-    {
-      "title": "Meow-meow!",
-      "color": 14177041
-    }
-  ]
-} }),
+      body: JSON.stringify({ content: "test" }),
     });
     console.log('Message sent successfully!');
   } catch (error) {

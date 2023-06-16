@@ -110,8 +110,6 @@ app.use(function (req, res) {
   res.status(404).sendFile('public/404.html', { root: __dirname });
 });
 
-setInterval(sendMessage, 60000);
-
 app.listen(port, () => console.log(`App listening on port ${port}!`));
 
 async function fetchFromMongoDB(set) {

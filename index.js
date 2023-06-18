@@ -211,7 +211,7 @@ async function getTimeToDrive(res, req) {
 
         // Extract full addresses from the request HTML
         const addresses = html.match(/"([^"]+)"/g).map(address => address.replace(/"/g, ""));
-        res.send(`${backwardText} to drive ${kmTextCutoff}`);//(${url})\n\nFull Addresses:\n${addresses.join('\n')}`);
+        res.send(`${backwardText} to drive ${kmTextCutoff}km`);//(${url})\n\nFull Addresses:\n${addresses.join('\n')}`);
       } else {
         console.log('Target character not found.');
       }

@@ -94,7 +94,7 @@ async function checkPageForLink(req, res) {
     Yeah, you do. I'm the cook. I'm the man who [got employed by] Gus Fring.`)
   }
   if (url === '/updateWebhooksForNewStuff') {
-    await sendMessage([process.env.webhooks], 1, process.env.uri)
+    await sendMessage(1, process.env.uri)
     res.send(`updated!`)
   }
   return;

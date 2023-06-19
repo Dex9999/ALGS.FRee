@@ -3,6 +3,8 @@ var fs = require('fs');
 var path = require('path');
 const { searchWca } = require('./definitions.js');
 const { sendMessage } = require('./public/discordWebhooks.js');
+const { TwistyPlayer } = require("cubing");
+
 
 var fetch = require('node-fetch');
 var cheerio = require('cheerio'); 
@@ -53,6 +55,20 @@ async function checkPageForLink(req, res) {
   if (url === '/l') {
     const html = fs.readFileSync('public/js/livefix.js', 'utf8');
     res.send(html);
+  }
+  if(url.startsWith('/screenshot'){
+  const player = new TwistyPlayer({
+    alg: "R U R' U'",
+  });
+
+  player.experimentalScreenshot()
+    .then((screenshot) => {
+      res.send(screenshot);
+    })
+    .catch((error) => {
+      console.error("Error generating screenshot:", error);
+      res.status(500).send('Error generating screenshot');
+    });
   }
   if (url.startsWith('/s/') || url.startsWith('/s%20')) {
     var request = req.url.replace(/%20/g, ' ').slice(3).split(' ');
@@ -110,22 +126,6 @@ app.get('*', checkPageForLink);
 
 app.get('/', (req, res) => {
   res.type('html').sendFile('public/index.html', { root: __dirname });
-});
-
-const { TwistyPlayer } = require("cubing");
-app.get('/screenshot', (req, res) => {
-  const player = new TwistyPlayer({
-    alg: "R U R' U'",
-  });
-
-  player.experimentalScreenshot()
-    .then((screenshot) => {
-      res.send(screenshot);
-    })
-    .catch((error) => {
-      console.error("Error generating screenshot:", error);
-      res.status(500).send('Error generating screenshot');
-    });
 });
 
 app.use(function (req, res) {

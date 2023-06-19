@@ -112,6 +112,22 @@ app.get('/', (req, res) => {
   res.type('html').sendFile('public/index.html', { root: __dirname });
 });
 
+const { TwistyPlayer } = require("cubing");
+app.get('/screenshot', (req, res) => {
+  const player = new TwistyPlayer({
+    alg: "R U R' U'",
+  });
+
+  player.experimentalScreenshot()
+    .then((screenshot) => {
+      res.send(screenshot);
+    })
+    .catch((error) => {
+      console.error("Error generating screenshot:", error);
+      res.status(500).send('Error generating screenshot');
+    });
+});
+
 app.use(function (req, res) {
   res.status(404).sendFile('public/404.html', { root: __dirname });
 });

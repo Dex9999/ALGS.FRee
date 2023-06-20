@@ -2,7 +2,6 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 const { searchWca } = require('./definitions.js');
-const { sendMessage } = require('./public/discordWebhooks.js');
 
 
 var fetch = require('node-fetch');
@@ -92,10 +91,6 @@ async function checkPageForLink(req, res) {
     You know. You all know exactly who I am. Say my name. <br/><br/>
     Do what? I don't... I don't have a damn clue who... you are.<br/><br/>
     Yeah, you do. I'm the cook. I'm the man who [got employed by] Gus Fring.`)
-  }
-  if (url === '/updateWebhooksForNewStuff') {
-    await sendMessage(1, process.env.uri)
-    res.send(`updated!`)
   }
   return;
 }

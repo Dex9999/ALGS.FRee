@@ -1,6 +1,7 @@
 const { MongoClient } = require('mongodb');
+const fetch = require('node-fetch');
 
-async function sendMessage(webhookURLs, page = 1, uri, webhooks) {
+async function sendMessage(page = 1, uri) {
   const currentDate = new Date().toISOString().split('T')[0];
 
   let response = await fetch(
@@ -17,6 +18,11 @@ async function sendMessage(webhookURLs, page = 1, uri, webhooks) {
     await client.connect();
     const database = client.db('webhook_competitions');
     const collection = database.collection('sent_competitions');
+    const webhookCollection = database.collection('webhook_urls');
+
+    // Retrieve webhook URLs from MongoDB
+    const webhookURLs = await webhookCollection.find().toArray();
+    const webhookUrlsArray = webhookURLs.map(webhook => webhook.url);
 
     if (res.length > 0) {
       for (let i = 0; i < res.length; i++) {
@@ -53,9 +59,9 @@ async function sendMessage(webhookURLs, page = 1, uri, webhooks) {
                 },
               },
             ],
-  "allowed_mentions": {
-    "parse": ["users"],
-  }
+            "allowed_mentions": {
+              "parse": ["roles"],
+            }
           };
 
           // Loop through venues and rooms to add fields to the embed
@@ -75,12 +81,54 @@ async function sendMessage(webhookURLs, page = 1, uri, webhooks) {
           });
 
           try {
-            for (const url of webhookURLs) {
-              let webhookURL = url;
+            for (const webhookUrl of webhookUrlsArray) {
+              let webhookURL = webhookUrl;
+              //30Kwcsd5q
+              if(webhookURL.endsWith("HBKcsS")){
               if (competition.city.toLowerCase().includes('ontario')) {
-                if(webhookURL.endsWith("HBKcsS")){
-                  embed['content'] = "\n<@616981104011771904>"
-                }
+                
+                  embed['content'] = "\n<@&1079165798490325154>"
+                
+              } else if (competition.city.toLowerCase().includes('yukon')) {
+                
+                  embed['content'] = "\n<@&1079165921123369010>"
+                
+              } else if (competition.city.toLowerCase().includes('saskatchewan')) {
+                
+                  embed['content'] = "\n<@&1079165906145517638>"
+                
+              } else if (competition.city.toLowerCase().includes('quebec')) {
+                
+                  embed['content'] = "\n<@&1079165869474730176>"
+                
+              } else if (competition.city.toLowerCase().includes('prince edward island')) {
+                
+                  embed['content'] = "\n<@&1079165842685694033>"
+                
+              } else if (competition.city.toLowerCase().includes('nunavut')) {
+                
+                  embed['content'] = "\n<@&1079165779355910264>"
+                
+              } else if (competition.city.toLowerCase().includes('nova scotia')) {
+                
+                  embed['content'] = "\n<@&1079165754592739408>"
+                
+              } else if (competition.city.toLowerCase().includes('newfoundland and labrador')) {
+                
+                  embed['content'] = "\n<@&1079165665157587056>"
+                
+              } else if (competition.city.toLowerCase().includes('manitoba')) {
+                
+                  embed['content'] = "\n<@&1079165570118856814>"
+                
+              } else if (competition.city.toLowerCase().includes('british columbia')) {
+                
+                  embed['content'] = "\n<@&1079165523033600051>"
+                
+              } else if (competition.city.toLowerCase().includes('alberta')) {
+                
+                  embed['content'] = "\n<@&1079165429982961747>"
+                
               }
 
               await fetch(webhookURL, {
@@ -93,7 +141,8 @@ async function sendMessage(webhookURLs, page = 1, uri, webhooks) {
 
               // Save sent competition in the database
               await collection.insertOne({ id: competitionId });
-              console.log('Competition', competitionId, 'sent successfully to:', url);
+              console.log('Competition', competitionId, 'sent successfully to:', webhookUrl);
+              }
             }
           } catch (error) {
             console.error('Error sending message:', error);
@@ -104,7 +153,7 @@ async function sendMessage(webhookURLs, page = 1, uri, webhooks) {
       }
 
       // Continue to the next page
-      await sendMessage(webhookURLs, page + 1);
+      await sendMessage(page + 1, uri);
     } else {
       console.log('No more competitions to send.');
     }
@@ -116,7 +165,8 @@ async function sendMessage(webhookURLs, page = 1, uri, webhooks) {
   }
 }
 
-sendMessage([webhooks]);
+
+
 
 const eventMapping = {
   '333': '<:333:1120126464034095154>',
@@ -172,5 +222,3 @@ function formatDate(date) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(date).toLocaleDateString(undefined, options);
 }
-
-module.exports = { sendMessage };

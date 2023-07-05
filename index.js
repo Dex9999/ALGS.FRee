@@ -96,10 +96,10 @@ async function checkPageForLink(req, res) {
 }
 
 // Logging
-app.use((req, res, next) => {
-  console.log(`${req.method} request for '${req.url}'`);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(`${req.method} request for '${req.url}'`);
+//   next();
+// });
 
 // For every link check if it matches
 app.get('*', checkPageForLink);

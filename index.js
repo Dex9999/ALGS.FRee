@@ -102,7 +102,7 @@ async function checkPageForLink(req, res) {
 // });
 
 // For every link check if it matches
-app.get('*', checkPageForLink);
+// app.get('*', checkPageForLink);
 
 app.get('/', (req, res) => {
   res.type('html').sendFile('public/index.html', { root: __dirname });

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Format Any String to work with password game styling -->
+<style>
+  .monospace {
+    font-family: Monospace;
+    font-size: 25px;
+  }
+</style>
+</head>
+<body>
+<input type="text" id="unused" placeholder="password">
+<br /><br />
+<button onclick="copyFormatted()">Copy Fixed Formatting</button>
+<div id="lets"></div>
+
+<script>
+async function copyFormatted() {
+  const div = document.getElementById("lets");
+  const inputString = document.getElementById("unused").value.split("......")[1];
+
+  function isVowel(character) {
+    const vowels = ['a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'];
+    return vowels.includes(character);
+  }
+
+  function isRoman(character) {
+    const romanNumerals = ['X', 'V', 'L', 'M', 'D', 'C', 'I'];
+    return romanNumerals.includes(character);
+  }
+
+  function isNum(character){
+    return /^\d+$/.test(character);
+  }
+
+  function isWing(character){
+    const pattern = /[🐔🐛🌕🌑🌓🌔🌕🌒🌖🌗🌘🏋️‍♂️]/;
+    return pattern.test(character);
+    }
+
+  function countLetters(string, index) {
+    const letterCount = {};
+
+    // Convert the string to lowercase to treat uppercase and lowercase letters as the same
+    const lowercasedString = string.toLowerCase();
+
+    // Iterate through each character in the string up to the specified index
+    for (let i = 0; i <= index; i++) {
+        const character = lowercasedString.charAt(i);
+
+        // Skip non-alphabetic characters
+        if (!character.match(/[a-z]/i)) {
+        continue;
+        }
+
+        // If the letter is already in the letterCount object, increment its count
+        if (letterCount.hasOwnProperty(character)) {
+        letterCount[character]++;
+        }
+        // Otherwise, initialize its count to 1
+        else {
+        letterCount[character] = 1;
+        }
+    }
+
+    return letterCount;
+  }
+
+
+
+  function wrapCharacterWithSpan(character, fontSize, fontFamily) {
+    console.log(character, fontSize, fontFamily)
+    const span = document.createElement("span");
+    span.style.fontSize = fontSize + "px";
+    span.style.fontFamily = fontFamily;
+    span.innerHTML = character;
+    return span;
+  }
+
+  const goodSizes = [0, 1, 4, 9, 12, 16, 25, 28, 32, 36, 42, 49, 64, 81];
+//   const goodSizes = [2, 3, 5, 6, 7, 8, 10, 11, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 29, 30, 31, 33, 34, 35, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 82];
+    //  const goodSizes = [20, 21, 22, 23, 24, 26, 27, 29, 30, 31, 33, 34, 35, 37, 38, 39, 40, 41, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60];
+
+
+  let fontSizeIndex = 0;
+  let htmlString = "";
+  htmlString += `<span style="font-family: Wingdings; font-size: 28px"><em>🥚🐛🐛🐛🐛🐛🐛🐛🐛🌕🌑🌓🌔🌕🌒🌖🌗🌘🏋️‍♂️🏋️‍♂️🏋️‍♂️......</em></span>`
+
+  for (let i = 0; i < inputString.length; i++) {
+    const character = inputString.charAt(i);
+    // console.log(character)
+    if(isNum(character)){
+        const size = parseInt(character);
+        htmlString += wrapCharacterWithSpan(character, size * size, "Monospace").outerHTML;
+    } else{
+        if (isRoman(character)) {
+        let indexObj = countLetters(inputString, i)
+        htmlString += wrapCharacterWithSpan(character, goodSizes[goodSizes.length-indexObj[character.toLowerCase()]], "Times New Roman").outerHTML;
+        } else if (isVowel(character)) {
+        let indexObj = countLetters(inputString, i)
+        htmlString += wrapCharacterWithSpan("<strong>"+character+"</strong>", goodSizes[goodSizes.length-indexObj[character.toLowerCase()]], "Monospace").outerHTML;
+        } else {
+        let indexObj = countLetters(inputString, i)
+        htmlString += wrapCharacterWithSpan(character, goodSizes[goodSizes.length-indexObj[character.toLowerCase()]], "Monospace").outerHTML;
+        }
+    }
+  }
+
+  div.innerHTML = htmlString;
+
+  const clipboardItem = new ClipboardItem({
+    "text/plain": new Blob([div.innerText], { type: "text/plain" }),
+    "text/html": new Blob([div.outerHTML], { type: "text/html" }),
+  });
+
+  navigator.clipboard.write([clipboardItem]);
+}
+</script>
+</body>
+</html>

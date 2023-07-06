@@ -101,7 +101,7 @@ app.use((req, res, next) => {
   next();
 });
 
-For every link check if it matches
+// For every link check if it matches
 app.get('*', checkPageForLink);
 
 app.get('/', (req, res) => {

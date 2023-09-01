@@ -97,14 +97,32 @@ function convert(jsonData) {
   container.appendChild(table);
   document.body.appendChild(container);
 }
+    
 // load data, {'setJson'} is the JSON replaced before page loads in index.js
-     function updateVotes(index, algs) {
-            algs[index].votes++;
-            const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
-            if (votesElement) {
-                votesElement.textContent = algs[index].votes;
+     function hasUserVoted(algId) {
+            // Use localStorage to store user votes
+            const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
+            return votedAlgorithms[algId] === true;
+        }
+
+        // Helper function to update algorithm votes and UI
+        function updateVotes(index, algs) {
+            if (!hasUserVoted(index)) {
+                algs[index].votes++;
+                const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
+                if (votesElement) {
+                    votesElement.textContent = algs[index].votes;
+                }
+                // Mark this algorithm as voted by the user
+                const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
+                votedAlgorithms[index] = true;
+                localStorage.setItem('votedAlgorithms', JSON.stringify(votedAlgorithms));
+                console.log(`Algorithm: ${algs[index].alg}, Votes: ${algs[index].votes}`);
+            } else {
+                alert('You have already voted for this algorithm.');
             }
         }
+
 try {
   const setAlgs = [{setJson}];
     setAlgs.forEach((obj) => {

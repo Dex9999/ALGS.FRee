@@ -98,14 +98,34 @@ function convert(jsonData) {
   document.body.appendChild(container);
 }
 // load data, {'setJson'} is the JSON replaced before page loads in index.js
+     function updateVotes(index, algs) {
+            algs[index].votes++;
+            const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
+            if (votesElement) {
+                votesElement.textContent = algs[index].votes;
+            }
+        }
 try {
   const setAlgs = [{setJson}];
-  setAlgs.forEach((obj) => {
-  cardGen(obj);
-  obj.algs.sort(function(a, b){return a.votes - b.votes});
-  obj.algs.reverse();
-  convert(obj.algs);
-  })
+    setAlgs.forEach((obj) => {
+                cardGen(obj);
+                obj.algs.sort((a, b) => b.votes - a.votes); // Sorting in descending order
+                convert(obj.algs);
+
+                const voteBoxes = document.querySelectorAll("#table_container table tr:not(:first-child) td:nth-child(2)");
+                voteBoxes.forEach((voteBox, index) => {
+                    voteBox.addEventListener("click", () => {
+                        updateVotes(index, obj.algs);
+                        console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
+                    });
+                });
+            });
+  // setAlgs.forEach((obj) => {
+  // cardGen(obj);
+  // obj.algs.sort(function(a, b){return a.votes - b.votes});
+  // obj.algs.reverse();
+  // convert(obj.algs);
+  // })
 } catch (error) {
   console.log(error)
 }

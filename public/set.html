@@ -111,6 +111,8 @@ function convert(jsonData) {
                 algs[index].votes++;
                 const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
                 if (votesElement) {
+                    // Change the text color to the background color and fill the box
+                    votesElement.style.color = votesElement.style.backgroundColor;
                     votesElement.textContent = algs[index].votes;
                 }
                 // Mark this algorithm as voted by the user

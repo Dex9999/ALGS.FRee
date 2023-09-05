@@ -100,16 +100,12 @@ function convert(jsonData) {
     
 
 function hasUserVoted(algId) {
-    console.log(algId)
     const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
-    console.log(votedAlgorithms)
     return votedAlgorithms[algId] === true;
 }
 
 function updateVotes(index, algs) {
     if (!hasUserVoted(index)) {
-        console.log(algs)
-        console.log(algs[index])
         algs[index].votes++;
         const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
         console.log(votesElement)
@@ -130,33 +126,31 @@ function markAsVoted(index) {
 }
 
 try {
-    const setAlgs = [{setJson}];
+    const setAlgs = [{ setJson }];
     setAlgs.forEach((obj) => {
         cardGen(obj);
         obj.algs.sort((a, b) => b.votes - a.votes);
         convert(obj.algs);
 
-        const voteBoxes = document.querySelectorAll("#table_container table tr:not(:first-child) td:nth-child(2)");
+        const tables = document.querySelectorAll("#table_container table");
 
-        // Add a single event listener to the parent element
-        document.querySelector("#table_container table").addEventListener("click", function (event) {
-            const target = event.target;
-            console.log(target)
-            const index = Array.from(voteBoxes).indexOf(target);
-            console.log("index: "+index)
-            
-            if (index !== -1) {
-                updateVotes(index, obj.algs);
-                console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
-            }
+        tables.forEach((table) => {
+            const voteBoxes = table.querySelectorAll("tr:not(:first-child) td:nth-child(2)");
+
+            table.addEventListener("click", function (event) {
+                const target = event.target;
+                const index = Array.from(voteBoxes).indexOf(target);
+
+                if (index !== -1) {
+                    updateVotes(index, obj.algs);
+                    console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
+                }
+            });
         });
     });
 } catch (error) {
     console.log(error);
 }
-
-
-
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

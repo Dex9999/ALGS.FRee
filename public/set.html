@@ -100,54 +100,54 @@ function convert(jsonData) {
     
 
 function hasUserVoted(algId) {
-    // Use localStorage to store user votes
     const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
     return votedAlgorithms[algId] === true;
 }
 
-// Helper function to update algorithm votes and UI
 function updateVotes(index, algs) {
     if (!hasUserVoted(index)) {
         algs[index].votes++;
         const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
         if (votesElement) {
-            // Change the text color to the background color and fill the box
             votesElement.style.color = votesElement.style.backgroundColor;
             votesElement.textContent = algs[index].votes;
         }
-        // Mark this algorithm as voted by the user
-        const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
-        votedAlgorithms[index] = true;
-        localStorage.setItem('votedAlgorithms', JSON.stringify(votedAlgorithms));
+        markAsVoted(index); // Encapsulate local storage logic
         console.log(`Algorithm: ${algs[index].alg}, Votes: ${algs[index].votes}`);
-        
-        // Remove the event listener after the first click
         voteBoxes[index].removeEventListener("click", voteClickHandler);
     }
 }
 
-// load data, {'setJson'} is the JSON replaced before page loads in index.js
+function markAsVoted(index) {
+    const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
+    votedAlgorithms[index] = true;
+    localStorage.setItem('votedAlgorithms', JSON.stringify(votedAlgorithms));
+}
+
 try {
-    const setAlgs = [{setJson}];
+    const setAlgs = [{ setJson }];
     setAlgs.forEach((obj) => {
         cardGen(obj);
-        obj.algs.sort((a, b) => b.votes - a.votes); // Sorting in descending order
+        obj.algs.sort((a, b) => b.votes - a.votes);
         convert(obj.algs);
 
         const voteBoxes = document.querySelectorAll("#table_container table tr:not(:first-child) td:nth-child(2)");
-        voteBoxes.forEach((voteBox, index) => {
-            // Define a separate function to handle the click event
-            function voteClickHandler() {
+        
+        // Add a single event listener to the parent element
+        document.querySelector("#table_container table").addEventListener("click", function (event) {
+            const target = event.target;
+            const index = Array.from(voteBoxes).indexOf(target);
+            
+            if (index !== -1) {
                 updateVotes(index, obj.algs);
                 console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
             }
-
-            voteBox.addEventListener("click", voteClickHandler);
         });
     });
 } catch (error) {
-    console.log(error)
+    console.log(error);
 }
+
 
 
 </script>

@@ -126,7 +126,7 @@ function markAsVoted(index) {
 }
 
 try {
-    const voteBoxes = table.querySelectorAll("tr:not(:first-child) td:nth-child(2)");
+    
     const setAlgs = [{setJson}];
     setAlgs.forEach((obj) => {
         cardGen(obj);
@@ -136,7 +136,7 @@ try {
         const tables = document.querySelectorAll("#table_container table");
 
         tables.forEach((table) => {
-
+const voteBoxes = table.querySelectorAll("tr:not(:first-child) td:nth-child(2)");
             table.addEventListener("click", function (event) {
                 const target = event.target;
                 const index = Array.from(voteBoxes).indexOf(target);

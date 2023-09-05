@@ -104,17 +104,16 @@ function hasUserVoted(algId) {
     return votedAlgorithms[algId] === true;
 }
 
-function updateVotes(index, algs, voteBoxes) {
+function updateVotes(index, algs) {
     if (!hasUserVoted(index)) {
         algs[index].votes++;
         const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
-        
+        console.log(votesElement)
         if (votesElement) {
             votesElement.style.color = votesElement.style.backgroundColor;
             votesElement.textContent = algs[index].votes;
         }
-        
-        markAsVoted(index);
+        markAsVoted(index); // Encapsulate local storage logic
         console.log(`Algorithm: ${algs[index].alg}, Votes: ${algs[index].votes}`);
         voteBoxes[index].removeEventListener("click", voteClickHandler);
     }
@@ -127,23 +126,26 @@ function markAsVoted(index) {
 }
 
 try {
-    const table = document.querySelector("#table_container table");
     const voteBoxes = table.querySelectorAll("tr:not(:first-child) td:nth-child(2)");
     const setAlgs = [{setJson}];
-    
     setAlgs.forEach((obj) => {
         cardGen(obj);
         obj.algs.sort((a, b) => b.votes - a.votes);
         convert(obj.algs);
 
-        table.addEventListener("click", function (event) {
-            const target = event.target;
-            const index = Array.from(voteBoxes).indexOf(target);
+        const tables = document.querySelectorAll("#table_container table");
 
-            if (index !== -1) {
-                updateVotes(index, obj.algs, voteBoxes);
-                console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
-            }
+        tables.forEach((table) => {
+
+            table.addEventListener("click", function (event) {
+                const target = event.target;
+                const index = Array.from(voteBoxes).indexOf(target);
+
+                if (index !== -1) {
+                    updateVotes(index, obj.algs);
+                    console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
+                }
+            });
         });
     });
 } catch (error) {

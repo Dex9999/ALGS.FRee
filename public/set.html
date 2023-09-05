@@ -115,7 +115,7 @@ function updateVotes(index, algs) {
         }
         markAsVoted(index); // Encapsulate local storage logic
         console.log(`Algorithm: ${algs[index].alg}, Votes: ${algs[index].votes}`);
-        voteBoxes[index].removeEventListener("click", voteClickHandler);
+        // voteBoxes[index].removeEventListener("click", voteClickHandler);
     }
 }
 

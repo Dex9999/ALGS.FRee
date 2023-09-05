@@ -108,7 +108,7 @@ function updateVotes(index, algs, voteBoxes) {
     if (!hasUserVoted(index)) {
         algs[index].votes++;
         const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
-        console.log(votesElement)
+        
         if (votesElement) {
             votesElement.style.color = votesElement.style.backgroundColor;
             votesElement.textContent = algs[index].votes;
@@ -127,31 +127,29 @@ function markAsVoted(index) {
 }
 
 try {
-    const tables = document.querySelectorAll("#table_container table");
+    const table = document.querySelector("#table_container table");
+    const voteBoxes = table.querySelectorAll("tr:not(:first-child) td:nth-child(2)");
+    const setAlgs = [{setJson}];
+    
+    setAlgs.forEach((obj) => {
+        cardGen(obj);
+        obj.algs.sort((a, b) => b.votes - a.votes);
+        convert(obj.algs);
 
-    tables.forEach((table) => {
-        const voteBoxes = table.querySelectorAll("tr:not(:first-child) td:nth-child(2)");
-        const setAlgs = [{setJson}];
+        table.addEventListener("click", function (event) {
+            const target = event.target;
+            const index = Array.from(voteBoxes).indexOf(target);
 
-        setAlgs.forEach((obj) => {
-            cardGen(obj);
-            obj.algs.sort((a, b) => b.votes - a.votes);
-            convert(obj.algs);
-
-            table.addEventListener("click", function (event) {
-                const target = event.target;
-                const index = Array.from(voteBoxes).indexOf(target);
-
-                if (index !== -1) {
-                    updateVotes(index, obj.algs, voteBoxes);
-                    console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
-                }
-            });
+            if (index !== -1) {
+                updateVotes(index, obj.algs, voteBoxes);
+                console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
+            }
         });
     });
 } catch (error) {
     console.log(error);
 }
+
 
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

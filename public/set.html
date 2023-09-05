@@ -115,7 +115,6 @@ function updateVotes(index, algs) {
         }
         markAsVoted(index); // Encapsulate local storage logic
         console.log(`Algorithm: ${algs[index].alg}, Votes: ${algs[index].votes}`);
-        const voteBoxes = table.querySelectorAll("tr:not(:first-child) td:nth-child(2)");
         voteBoxes[index].removeEventListener("click", voteClickHandler);
     }
 }
@@ -127,6 +126,7 @@ function markAsVoted(index) {
 }
 
 try {
+    const voteBoxes = table.querySelectorAll("tr:not(:first-child) td:nth-child(2)");
     const setAlgs = [{setJson}];
     setAlgs.forEach((obj) => {
         cardGen(obj);

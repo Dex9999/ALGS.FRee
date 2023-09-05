@@ -136,7 +136,7 @@ try {
         // Add a single event listener to the parent element
         document.querySelector("#table_container table").addEventListener("click", function (event) {
             const target = event.target;
-            console.log("target: "+target)
+            console.log(target)
             const index = Array.from(voteBoxes).indexOf(target);
             console.log("index: "+index)
             

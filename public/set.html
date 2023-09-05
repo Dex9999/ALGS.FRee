@@ -98,57 +98,59 @@ function convert(jsonData) {
   document.body.appendChild(container);
 }
     
-// load data, {'setJson'} is the JSON replaced before page loads in index.js
+
      function hasUserVoted(algId) {
-            // Use localStorage to store user votes
-            const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
-            return votedAlgorithms[algId] === true;
-        }
-
-        // Helper function to update algorithm votes and UI
-        function updateVotes(index, algs) {
-            if (!hasUserVoted(index)) {
-                algs[index].votes++;
-                const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
-                if (votesElement) {
-                    // Change the text color to the background color and fill the box
-                    votesElement.style.color = votesElement.style.backgroundColor;
-                    votesElement.textContent = algs[index].votes;
-                }
-                // Mark this algorithm as voted by the user
-                const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
-                votedAlgorithms[index] = true;
-                localStorage.setItem('votedAlgorithms', JSON.stringify(votedAlgorithms));
-                console.log(`Algorithm: ${algs[index].alg}, Votes: ${algs[index].votes}`);
-            } else {
-                alert('You have already voted for this algorithm.');
-            }
-        }
-
-try {
-  const setAlgs = [{setJson}];
-    setAlgs.forEach((obj) => {
-                cardGen(obj);
-                obj.algs.sort((a, b) => b.votes - a.votes); // Sorting in descending order
-                convert(obj.algs);
-
-                const voteBoxes = document.querySelectorAll("#table_container table tr:not(:first-child) td:nth-child(2)");
-                voteBoxes.forEach((voteBox, index) => {
-                    voteBox.addEventListener("click", () => {
-                        updateVotes(index, obj.algs);
-                        console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
-                    });
-                });
-            });
-  // setAlgs.forEach((obj) => {
-  // cardGen(obj);
-  // obj.algs.sort(function(a, b){return a.votes - b.votes});
-  // obj.algs.reverse();
-  // convert(obj.algs);
-  // })
-} catch (error) {
-  console.log(error)
+    // Use localStorage to store user votes
+    const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
+    return votedAlgorithms[algId] === true;
 }
+
+// Helper function to update algorithm votes and UI
+function updateVotes(index, algs) {
+    if (!hasUserVoted(index)) {
+        algs[index].votes++;
+        const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
+        if (votesElement) {
+            // Change the text color to the background color and fill the box
+            votesElement.style.color = votesElement.style.backgroundColor;
+            votesElement.textContent = algs[index].votes;
+        }
+        // Mark this algorithm as voted by the user
+        const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
+        votedAlgorithms[index] = true;
+        localStorage.setItem('votedAlgorithms', JSON.stringify(votedAlgorithms));
+        console.log(`Algorithm: ${algs[index].alg}, Votes: ${algs[index].votes}`);
+        
+        // Remove the event listener to prevent multiple clicks
+        voteBoxes[index].removeEventListener("click", voteClickHandler);
+    } else {
+        alert('You have already voted for this algorithm.');
+    }
+}
+
+// load data, {'setJson'} is the JSON replaced before page loads in index.js
+try {
+    const setAlgs = [{setJson}];
+    setAlgs.forEach((obj) => {
+        cardGen(obj);
+        obj.algs.sort((a, b) => b.votes - a.votes); // Sorting in descending order
+        convert(obj.algs);
+
+        const voteBoxes = document.querySelectorAll("#table_container table tr:not(:first-child) td:nth-child(2)");
+        voteBoxes.forEach((voteBox, index) => {
+            // Define a separate function to handle the click event
+            function voteClickHandler() {
+                updateVotes(index, obj.algs);
+                console.log(`Algorithm: ${obj.algs[index].alg}, Votes: ${obj.algs[index].votes}`);
+            }
+
+            voteBox.addEventListener("click", voteClickHandler);
+        });
+    });
+} catch (error) {
+    console.log(error)
+}
+
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

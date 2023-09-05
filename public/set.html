@@ -100,7 +100,9 @@ function convert(jsonData) {
     
 
 function hasUserVoted(algId) {
+    console.log(algId)
     const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
+    console.log(votedAlgorithms)
     return votedAlgorithms[algId] === true;
 }
 

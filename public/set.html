@@ -126,7 +126,7 @@ function markAsVoted(index) {
 }
 
 try {
-    const setAlgs = [{ setJson }];
+    const setAlgs = [{setJson}];
     setAlgs.forEach((obj) => {
         cardGen(obj);
         obj.algs.sort((a, b) => b.votes - a.votes);

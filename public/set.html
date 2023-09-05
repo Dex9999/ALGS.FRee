@@ -99,7 +99,7 @@ function convert(jsonData) {
 }
     
 
-     function hasUserVoted(algId) {
+function hasUserVoted(algId) {
     // Use localStorage to store user votes
     const votedAlgorithms = JSON.parse(localStorage.getItem('votedAlgorithms')) || {};
     return votedAlgorithms[algId] === true;
@@ -121,10 +121,8 @@ function updateVotes(index, algs) {
         localStorage.setItem('votedAlgorithms', JSON.stringify(votedAlgorithms));
         console.log(`Algorithm: ${algs[index].alg}, Votes: ${algs[index].votes}`);
         
-        // Remove the event listener to prevent multiple clicks
+        // Remove the event listener after the first click
         voteBoxes[index].removeEventListener("click", voteClickHandler);
-    } else {
-        alert('You have already voted for this algorithm.');
     }
 }
 
@@ -150,6 +148,7 @@ try {
 } catch (error) {
     console.log(error)
 }
+
 
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

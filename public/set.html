@@ -108,7 +108,7 @@ function updateVotes(index, algs) {
     if (!hasUserVoted(index)) {
         algs[index].votes++;
         const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
-        console.log("voteelem: "+votesElement)
+        console.log(votesElement)
         if (votesElement) {
             votesElement.style.color = votesElement.style.backgroundColor;
             votesElement.textContent = algs[index].votes;

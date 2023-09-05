@@ -106,6 +106,8 @@ function hasUserVoted(algId) {
 
 function updateVotes(index, algs) {
     if (!hasUserVoted(index)) {
+        console.log(algs)
+        console.log(algs[index])
         algs[index].votes++;
         const votesElement = document.querySelector(`#table_container table tr:nth-child(${index + 2}) td:nth-child(2)`);
         if (votesElement) {

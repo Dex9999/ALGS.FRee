@@ -34,12 +34,6 @@
     "puppeteer-core": "^6",
     "sr-puzzlegen": "^1.0.4"
   },
-  "devDependencies": {
-    "@types/node": "^20.10.6",
-  },
-  "engines": {
-    "node": "18"
-  }
   "nodemonConfig": {
     "ext": "js,json,hbs,html,css"
   }

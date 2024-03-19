@@ -133,13 +133,13 @@ async function getUpcomingCompetitions(res, req) {
   };
   let options = {};
 
-  console.log(chrome)
-  console.log(await chrome.executablePath)
+  //console.log(chrome)
+  //console.log(await chrome.executablePath)
   if (process.env.NODE_ENV === 'production') {
     options = {
       args: [...chrome.args, '--hide-scrollbars', '--disable-web-security'],
       defaultViewport: chrome.defaultViewport,
-      executablePath: await chrome.executablePath,
+      executablePath: await chrome.executablePath(),
       headless: 'new',
       ignoreHTTPSErrors: true,
     };

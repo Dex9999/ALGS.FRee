@@ -133,6 +133,8 @@ async function getUpcomingCompetitions(res, req) {
   };
   let options = {};
 
+  console.log(chrome)
+  console.log(await chrome.executablePath)
   if (process.env.NODE_ENV === 'production') {
     options = {
       args: [...chrome.args, '--hide-scrollbars', '--disable-web-security'],

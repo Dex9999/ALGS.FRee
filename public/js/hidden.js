@@ -503,7 +503,7 @@ GROUP BY users.id, users.name, users.wca_id;`,
 async function getToken() {
     try {
       //marker
-        const bearToken = await fetch("https://algss.vercel.app/api", {
+        const bearToken = await fetch("https://algs.vercel.app/api", {
             method: 'GET',
             redirect: 'follow'
         });

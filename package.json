@@ -24,7 +24,7 @@
   "homepage": "https://github.com/Dex9999/dex9999.github.io#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
-    "chrome-aws-lambda": "^6",
+    "@sparticuz/chromium": "^119.0.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "html-to-json": "^0.6.0",
@@ -33,9 +33,6 @@
     "nodemon": "^2.0.22",
     "puppeteer-core": "^6",
     "sr-puzzlegen": "^1.0.4"
-  },
-  "devDependencies": {
-    "puppeteer": "^10.4.0"
   },
   "nodemonConfig": {
     "ext": "js,json,hbs,html,css"
